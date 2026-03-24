@@ -1,1 +1,1 @@
-Add README.md with my OSS contribution plan
+熟练掌握 Git 与 GitHub 的基础协作流程，并在未来尝试为一些电子信息相关的开源项目（如雷达仿真工具）提交代码贡献。
