@@ -17,10 +17,12 @@ import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } fr
 import { HomeConstants } from '../constants/HomeConstants';
 import { IconInfo, IconInfoViewModel } from '../viewmodel/IconInfoViewModel';
 import { HomeButton } from './CommonView';
+import { ClassifyConstants } from '../constants/ClassifyConstants';
 
 @Component
 export struct WelfareView {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
+  @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
   private welfareList: IconInfo[] = new IconInfoViewModel(this.context).getWelfareList();
 
@@ -65,6 +67,9 @@ export struct WelfareView {
           .height(CommonConstants.FULL_PERCENT)
           .justifyContent(FlexAlign.Start)
           .backgroundColor(Color.White)
+          .onClick(() => {
+            this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+          })
         }, (item: IconInfo, index: number) => index + JSON.stringify(item))
       }
       .height(new BreakpointType($r('app.float.welfare_row_height_sm'), $r('app.float.welfare_row_height_md'),

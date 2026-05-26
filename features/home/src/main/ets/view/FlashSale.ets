@@ -17,11 +17,13 @@ import { BreakpointConstants, BreakpointType, CommonConstants, Logger, ResourceU
 import { HomeConstants } from '../constants/HomeConstants';
 import { SectionProduct, SectionProductsViewModel } from '../viewmodel/SectionProductsViewModel';
 import { HomeButton, ProductFeature, ProductInfo, ProductPrice, ProductTitle, TitleView } from './CommonView';
+import { ClassifyConstants } from '../constants/ClassifyConstants';
 
 @Component
 export struct FlashSale {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('windowWidth') windowWidth: number = 0;
+  @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
   private flashSaleProductList: SectionProduct[] = new SectionProductsViewModel(this.context).getFlashSaleProductList();
 
@@ -78,6 +80,9 @@ export struct FlashSale {
             }
             .width(CommonConstants.FULL_PERCENT)
             .height(CommonConstants.FULL_PERCENT)
+            .onClick(() => {
+              this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+            })
           }
           .height(this.getGridColHeight())
         }, (item: SectionProduct, index: number) => index + JSON.stringify(item))

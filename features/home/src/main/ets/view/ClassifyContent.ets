@@ -28,12 +28,7 @@ export struct ClassifyContent {
 
   @Builder
   PageMap(name: string) {
-    if (name === ClassifyConstants.NAV_ROUTER_LIST(this.context)[0]) {
-      ClassifyNavDestination({ name: name })
-    } else {
-      NavDestination()
-        .hideTitleBar(true)
-    }
+    ClassifyNavDestination({ name: name })
   }
 
   aboutToAppear(): void {

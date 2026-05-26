@@ -16,11 +16,13 @@
 import { BreakpointConstants, BreakpointType, CommonConstants, Logger, ResourceUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { RecommendedProductViewModel, RecommendedProduct } from '../viewmodel/RecommendedProductViewModel';
+import { ClassifyConstants } from '../constants/ClassifyConstants';
 
 @Component
 export struct RecommendedProductView {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('windowWidth') windowWidth: number = 0;
+  @Consume('pageInfos') pageInfos: NavPathStack;
   @State recommendedProducts: RecommendedProduct[] = new RecommendedProductViewModel().getRecommendedProductList();
 
   build() {
@@ -45,6 +47,9 @@ export struct RecommendedProductView {
         .aspectRatio(1)
         .width(this.getSwiperWidth(this.currentBreakpoint, this.windowWidth))
         .height(this.getSwiperWidth(this.currentBreakpoint, this.windowWidth))
+        .onClick(() => {
+          this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+        })
       }, (item: Resource, index: number) => JSON.stringify(item) + index)
     }
     .displayCount(new BreakpointType(CommonConstants.TWO, CommonConstants.THREE, CommonConstants.FOUR)

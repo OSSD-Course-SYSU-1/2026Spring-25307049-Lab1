@@ -1,24 +1,11 @@
-/*
- * Copyright (c) 2024 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
 import { ShoppingBagConstants } from '../constants/ShoppingBagConstants';
 
 @Component
 export struct ShoppingCardFoot {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
+  @Prop selectedCount: number = 0;
+  @Prop totalPrice: number = 0;
   public isMoreDetail: boolean = false;
   private context: Context = this.getUIContext().getHostContext()!
 
@@ -26,6 +13,7 @@ export struct ShoppingCardFoot {
     Row(){
       Row(){
         Checkbox()
+          .select(this.selectedCount > 0 ? (this.selectedCount >= 4 ? true : false) : false)
           .selectedColor($r('app.color.classify_indicator_selected_color'))
           .width($r('app.float.check_box_size'))
           .height($r('app.float.check_box_size'))
@@ -53,11 +41,11 @@ export struct ShoppingCardFoot {
             Text(ShoppingBagConstants.SHOPPING_CARD_FOOT_TITLES(this.context)[1])
               .fontSize($r('app.float.shop_card_font_1'))
               .lineHeight($r('app.float.shop_card_line_1'))
-            Text(ShoppingBagConstants.SHOPPING_CARD_FOOT_TITLES(this.context)[2])
+            Text('￥')
               .fontSize($r('app.float.shop_card_font_1'))
               .lineHeight($r('app.float.shop_card_line_2'))
               .fontColor($r('app.color.shop_card_font_color'))
-            Text(ShoppingBagConstants.SHOPPING_CARD_FOOT_TITLES(this.context)[3])
+            Text(this.totalPrice.toString())
               .fontSize($r('app.float.shop_card_font_2'))
               .lineHeight($r('app.float.shop_card_line_3'))
               .fontColor($r('app.color.shop_card_font_color'))
@@ -78,19 +66,22 @@ export struct ShoppingCardFoot {
           }
         }
 
-        Button(ShoppingBagConstants.SHOPPING_CARD_FOOT_TITLES(this.context)[5],
+        Button(ShoppingBagConstants.SHOPPING_CARD_FOOT_TITLES(this.context)[5] +
+          '(' + this.selectedCount.toString() + ')',
           { type: ButtonType.Capsule, stateEffect: true })
           .labelStyle({
             font:{
               size:$r('app.float.shop_card_font_2')
             }
           })
-          .backgroundColor($r('app.color.shop_card_foot_button'))
+          .backgroundColor(this.selectedCount > 0 ?
+            '#CF0A2C' : $r('app.color.shop_card_foot_button'))
           .height($r('app.float.foot_button_height'))
           .width($r('app.float.foot_button_width'))
           .margin({
             left: $r('app.float.foot_button_margin')
           })
+          .enabled(this.selectedCount > 0)
       }
       .height(CommonConstants.FULL_PERCENT)
       .alignItems(VerticalAlign.Center)

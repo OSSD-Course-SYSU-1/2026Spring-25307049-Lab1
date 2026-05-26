@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2024 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
 import { deviceInfo } from '@kit.BasicServicesKit';
 import { ShoppingCardFoot } from './ShoppingCardFoot';
@@ -40,7 +25,50 @@ export struct ShoppingBagContent {
 struct ShoppingBagView {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @State allChecked: boolean = false;
+  @State checkedStates: boolean[] = [false, false, false, false];
   private context: Context = this.getUIContext().getHostContext()!
+  private shoppingBagList: ShoppingBagProduct[] = new ShoppingBagListViewModel(this.context).getShoppingBagItemData();
+
+  getSelectedCount(): number {
+    let count = 0;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      if (this.checkedStates[i]) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  getTotalPrice(): number {
+    let total = 0;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      if (this.checkedStates[i]) {
+        total += this.shoppingBagList[i].getPrice();
+      }
+    }
+    return total;
+  }
+
+  toggleAll(): void {
+    this.allChecked = !this.allChecked;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      this.checkedStates[i] = this.allChecked;
+    }
+  }
+
+  onItemCheckChange(index: number): void {
+    this.checkedStates[index] = !this.checkedStates[index];
+    // Update allChecked state
+    let allTrue = true;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      if (!this.checkedStates[i]) {
+        allTrue = false;
+        break;
+      }
+    }
+    this.allChecked = allTrue;
+  }
 
   build() {
     Column() {
@@ -61,14 +89,22 @@ struct ShoppingBagView {
         .height($r('app.float.bag_title_row_height'))
         .width(CommonConstants.FULL_PERCENT)
 
-        ShoppingBagCard()
+        ShoppingBagCard({
+          checkedStates: $checkedStates,
+          allChecked: $allChecked,
+          onItemCheckChange: (index: number) => { this.onItemCheckChange(index) },
+          toggleAll: () => { this.toggleAll() }
+        })
       }
       .width(CommonConstants.FULL_PERCENT)
       .layoutWeight(1)
       .margin({ top: deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? $r('app.float.bag_col_margin') :
         this.topRectHeight })
 
-      ShoppingCardFoot()
+      ShoppingCardFoot({
+        selectedCount: this.getSelectedCount(),
+        totalPrice: this.getTotalPrice()
+      })
         .visibility(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.None : Visibility.Visible)
     }
     .padding({
@@ -89,8 +125,50 @@ export struct DetailShoppingBagView {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('topRectHeight') topRectHeight: number = 0;
   @Consume('pageInfos') pageInfos: NavPathStack;
+  @State allChecked: boolean = false;
+  @State checkedStates: boolean[] = [false, false, false, false];
   public isMoreDetail: boolean = false;
   private context: Context = this.getUIContext().getHostContext()!
+  private shoppingBagList: ShoppingBagProduct[] = new ShoppingBagListViewModel(this.context).getShoppingBagItemData();
+
+  getSelectedCount(): number {
+    let count = 0;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      if (this.checkedStates[i]) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  getTotalPrice(): number {
+    let total = 0;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      if (this.checkedStates[i]) {
+        total += this.shoppingBagList[i].getPrice();
+      }
+    }
+    return total;
+  }
+
+  toggleAll(): void {
+    this.allChecked = !this.allChecked;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      this.checkedStates[i] = this.allChecked;
+    }
+  }
+
+  onItemCheckChange(index: number): void {
+    this.checkedStates[index] = !this.checkedStates[index];
+    let allTrue = true;
+    for (let i = 0; i < this.checkedStates.length; i++) {
+      if (!this.checkedStates[i]) {
+        allTrue = false;
+        break;
+      }
+    }
+    this.allChecked = allTrue;
+  }
 
   build() {
     Column() {
@@ -131,14 +209,22 @@ export struct DetailShoppingBagView {
         .height($r('app.float.bag_title_row_height'))
         .width(CommonConstants.FULL_PERCENT)
 
-        ShoppingBagCard()
+        ShoppingBagCard({
+          checkedStates: $checkedStates,
+          allChecked: $allChecked,
+          onItemCheckChange: (index: number) => { this.onItemCheckChange(index) },
+          toggleAll: () => { this.toggleAll() }
+        })
       }
       .width(CommonConstants.FULL_PERCENT)
       .layoutWeight(1)
       .margin({ top: deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? $r('app.float.bag_col_margin') :
         this.topRectHeight })
 
-      ShoppingCardFoot()
+      ShoppingCardFoot({
+        selectedCount: this.getSelectedCount(),
+        totalPrice: this.getTotalPrice()
+      })
         .margin({ bottom: deviceInfo.deviceType !== CommonConstants.DEVICE_TYPES[0] ?
           CommonConstants.BOTTOM_RECT_HEIGHT : 0 })
         .visibility(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG && !this.isMoreDetail ?
@@ -156,82 +242,99 @@ export struct DetailShoppingBagView {
     })
   }
 }
-@Builder
-function ShoppingBagCard(context: Context = this.getUIContext().getHostContext()!, ShoppingBagList: ShoppingBagProduct[] = new ShoppingBagListViewModel(this.context).getShoppingBagItemData() ) {
-  Scroll() {
-    Column() {
-      Row() {
-        CheckboxGroup({ group: 'shoppingCardHuaWei' })
-          .selectedColor($r('app.color.classify_indicator_selected_color'))
-          .width($r('app.float.check_box_size'))
-          .height($r('app.float.check_box_size'))
-          .margin({ right: $r('app.float.check_box_group_margin') })
-          .border({ color: ResourceUtil.getCommonBorderColor()[2] })
 
-        Image($r('app.media.shopping_card_logo'))
-          .width(ResourceUtil.getCommonImgSize()[0])
-          .height(ResourceUtil.getCommonImgSize()[0])
-          .margin({ right: $r('app.float.bag_seller_logo_margin') })
-          .border({
-            radius: ResourceUtil.getCommonBorderRadius()[4],
-            width: $r('app.float.bag_seller_logo_border_width'),
-            color: ResourceUtil.getCommonBorderColor()[3]
-          })
+@Component
+struct ShoppingBagCard {
+  @Link checkedStates: boolean[];
+  @Link allChecked: boolean;
+  onItemCheckChange: (index: number) => void = () => {};
+  toggleAll: () => void = () => {};
+  private context: Context = this.getUIContext().getHostContext()!
+  private shoppingBagList: ShoppingBagProduct[] = new ShoppingBagListViewModel(this.context).getShoppingBagItemData();
 
-        Text(ShoppingBagConstants.SHOPPING_BAG_TITLES(context)[2])
-          .font({
-            size: $r('app.float.bag_name_font'),
-            weight: CommonConstants.FONT_WEIGHT_500
-          })
-          .layoutWeight(1)
-      }
-      .height($r('app.float.bag_card_title_row_height'))
-      .width(CommonConstants.FULL_PERCENT)
-
-      List() {
-        ForEach(ShoppingBagList, (item: ShoppingBagProduct) => {
-          ListItem() {
-            Row() {
-              Column() {
-                Checkbox({ group: 'shoppingCardHuaWei' })
-                  .selectedColor($r('app.color.classify_indicator_selected_color'))
-                  .width($r('app.float.check_box_size'))
-                  .height($r('app.float.check_box_size'))
-                  .margin({
-                    right: $r('app.float.bag_card_check_box_margin'),
-                    left: 0
-                  })
-                  .border({
-                    color: ResourceUtil.getCommonBorderColor()[2]
-                  })
-                  .shape(CheckBoxShape.ROUNDED_SQUARE)
-              }
-              .width($r('app.float.bag_card_check_col_width'))
-              .padding({ top: $r('app.float.bag_card_check_col_padding') })
-              .justifyContent(FlexAlign.Start)
-              Column(){
-                ShoppingCardItem(item, false)
-              }
-              .layoutWeight(1)
-            }
-            .width(CommonConstants.FULL_PERCENT)
-            .padding({
-              top: $r('app.float.bag_card_row_padding'),
-              bottom: $r('app.float.bag_card_row_padding')
+  build() {
+    Scroll() {
+      Column() {
+        Row() {
+          Checkbox({ name: 'selectAll', group: 'cartGroup' })
+            .select(this.allChecked)
+            .selectedColor($r('app.color.classify_indicator_selected_color'))
+            .width($r('app.float.check_box_size'))
+            .height($r('app.float.check_box_size'))
+            .margin({ right: $r('app.float.check_box_group_margin') })
+            .border({ color: ResourceUtil.getCommonBorderColor()[2] })
+            .onChange((value: boolean) => {
+              this.toggleAll();
             })
-          }
-        }, (item: ShoppingBagProduct) => item.getName())
-      }
-      .scrollBar(BarState.Off)
-    }
-    .width(CommonConstants.FULL_PERCENT)
-    .backgroundColor(Color.White)
-    .borderRadius(ResourceUtil.getCommonBorderRadius()[7])
-    .padding($r('app.float.bag_card_col_padding'))
-    .margin({ bottom: CommonConstants.BOTTOM_RECT_HEIGHT })
-  }
-  .scrollBar(BarState.Off)
-  .layoutWeight(1)
-  .width(CommonConstants.FULL_PERCENT)
-}
 
+          Image($r('app.media.shopping_card_logo'))
+            .width(ResourceUtil.getCommonImgSize()[0])
+            .height(ResourceUtil.getCommonImgSize()[0])
+            .margin({ right: $r('app.float.bag_seller_logo_margin') })
+            .border({
+              radius: ResourceUtil.getCommonBorderRadius()[4],
+              width: $r('app.float.bag_seller_logo_border_width'),
+              color: ResourceUtil.getCommonBorderColor()[3]
+            })
+
+          Text(ShoppingBagConstants.SHOPPING_BAG_TITLES(this.context)[2])
+            .font({
+              size: $r('app.float.bag_name_font'),
+              weight: CommonConstants.FONT_WEIGHT_500
+            })
+            .layoutWeight(1)
+        }
+        .height($r('app.float.bag_card_title_row_height'))
+        .width(CommonConstants.FULL_PERCENT)
+
+        List() {
+          ForEach(this.shoppingBagList, (item: ShoppingBagProduct, index: number) => {
+            ListItem() {
+              Row() {
+                Column() {
+                  Checkbox({ name: 'item_' + index, group: 'cartGroup' })
+                    .select(this.checkedStates[index])
+                    .selectedColor($r('app.color.classify_indicator_selected_color'))
+                    .width($r('app.float.check_box_size'))
+                    .height($r('app.float.check_box_size'))
+                    .margin({
+                      right: $r('app.float.bag_card_check_box_margin'),
+                      left: 0
+                    })
+                    .border({
+                      color: ResourceUtil.getCommonBorderColor()[2]
+                    })
+                    .shape(CheckBoxShape.ROUNDED_SQUARE)
+                    .onChange((value: boolean) => {
+                      this.onItemCheckChange(index);
+                    })
+                }
+                .width($r('app.float.bag_card_check_col_width'))
+                .padding({ top: $r('app.float.bag_card_check_col_padding') })
+                .justifyContent(FlexAlign.Start)
+                Column(){
+                  ShoppingCardItem(item, false)
+                }
+                .layoutWeight(1)
+              }
+              .width(CommonConstants.FULL_PERCENT)
+              .padding({
+                top: $r('app.float.bag_card_row_padding'),
+                bottom: $r('app.float.bag_card_row_padding')
+              })
+            }
+          }, (item: ShoppingBagProduct) => item.getName())
+        }
+        .scrollBar(BarState.Off)
+      }
+      .width(CommonConstants.FULL_PERCENT)
+      .backgroundColor(Color.White)
+      .borderRadius(ResourceUtil.getCommonBorderRadius()[7])
+      .padding($r('app.float.bag_card_col_padding'))
+      .margin({ bottom: CommonConstants.BOTTOM_RECT_HEIGHT })
+    }
+    .scrollBar(BarState.Off)
+    .layoutWeight(1)
+    .width(CommonConstants.FULL_PERCENT)
+  }
+}
