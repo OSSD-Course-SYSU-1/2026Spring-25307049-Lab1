@@ -1,0 +1,26 @@
+# HarmonyOS
+.hvigor/
+**/build/
+**/.preview/
+**/oh_modules/
+**/node_modules/
+
+# IDE
+.idea/
+*.iml
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+*.hap
+*.app
+
+# Claude
+.claude/
+
+# Environment
+.cxx/
+**/oh-package-lock.json5
