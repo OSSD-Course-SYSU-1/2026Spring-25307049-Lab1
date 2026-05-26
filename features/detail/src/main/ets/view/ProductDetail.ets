@@ -31,6 +31,7 @@ export struct ProductPicture {
   @State currentSwiperIndex: number = 0;
   @Prop pageBreakpoint: string;
   @Link isMoreLiveDetail: boolean;
+  @Link isShareSheetVisible: boolean;
   @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
   private pipWindowUtil: PipWindowUtil | undefined = PipWindowUtil.getPipWindowUtil(this.getUIContext());
@@ -108,6 +109,15 @@ export struct ProductPicture {
             // [End product_detail]
             .visibility(this.pageBreakpoint === BreakpointConstants.BREAKPOINT_MD || this.isSplitMode ?
               Visibility.Visible : Visibility.None)
+          Image($r('app.media.icon_share'))
+            .height(ResourceUtil.getCommonImgSize()[1])
+            .width(ResourceUtil.getCommonImgSize()[1])
+            .margin({ right: $r('app.float.picture_icon_margin') })
+            .visibility(this.pageBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.None :
+              Visibility.Visible)
+            .onClick(() => {
+              this.isShareSheetVisible = true;
+            })
           Image($r('app.media.ic_more'))
             .height(ResourceUtil.getCommonImgSize()[1])
             .width(ResourceUtil.getCommonImgSize()[1])

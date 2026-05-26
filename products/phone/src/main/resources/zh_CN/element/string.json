@@ -19,6 +19,14 @@
     {
       "name": "SecondAbility_label",
       "value": "分屏-商品详情"
+    },
+    {
+      "name": "internet_permission_reason",
+      "value": "用于设备之间的网络数据传输"
+    },
+    {
+      "name": "datasync_permission_reason",
+      "value": "用于发现附近设备进行分享"
     }
   ]
 }

@@ -19,6 +19,14 @@
     {
       "name": "SecondAbility_label",
       "value": "Split Screen - Offering Details"
+    },
+    {
+      "name": "internet_permission_reason",
+      "value": "Required for network data transfer between devices"
+    },
+    {
+      "name": "datasync_permission_reason",
+      "value": "Required to discover nearby devices for sharing"
     }
   ]
 }

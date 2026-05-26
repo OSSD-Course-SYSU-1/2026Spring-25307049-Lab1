@@ -15,11 +15,12 @@
 
 import { deviceInfo } from '@kit.BasicServicesKit';
 import { AbilityConstant, common, StartOptions, Want } from '@kit.AbilityKit';
-import { BreakpointConstants, CommonConstants, PipWindowUtil, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, PipWindowUtil, ResourceUtil, ShareSheet } from '@ohos/commons';
 import { ProductInfo, ProductPicture } from './ProductDetail';
 import { ProductUtilView } from './ProductUtilView';
 import { DetailTopIcon } from './CommonView';
 import { AllComments } from './ProductConfig';
+import { DetailShareHelper } from '../share/DetailShareHelper';
 
 @Component
 export struct ProductHome {
@@ -34,6 +35,8 @@ export struct ProductHome {
   @State isDialogOpen: boolean = false;
   @State detailType: string = CommonConstants.BIND_SHEET_PAGE_TYPES[3];
   @State isLiveMoreDetail: boolean = false;
+  @State isShareSheetVisible: boolean = false;
+  @State sharePayload: string = '';
   @Consume('pageInfos') pageInfos: NavPathStack;
   private pipWindowUtil: PipWindowUtil | undefined = PipWindowUtil.getPipWindowUtil(this.getUIContext());
   public is2in1: boolean = deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0];
@@ -49,8 +52,9 @@ export struct ProductHome {
 
   build() {
     NavDestination() {
-      // [Start product_side_bar_container]
-      SideBarContainer() {
+      Stack() {
+        // [Start product_side_bar_container]
+        SideBarContainer() {
         Column() {
           Image($r('app.media.icon_close_4'))
             // [StartExclude product_side_bar_container]
@@ -82,7 +86,8 @@ export struct ProductHome {
             Column() {
               Scroll() {
                 Column() {
-                  ProductPicture({ pageBreakpoint: this.currentBreakpoint, isMoreLiveDetail: $isLiveMoreDetail })
+                  ProductPicture({ pageBreakpoint: this.currentBreakpoint, isMoreLiveDetail: $isLiveMoreDetail,
+                    isShareSheetVisible: $isShareSheetVisible })
                   ProductInfo({ pageBreakpoint: this.currentBreakpoint })
                 }
               }
@@ -97,7 +102,8 @@ export struct ProductHome {
             .layoutWeight(1)
           } else {
             Column() {
-              ProductPicture({ pageBreakpoint: this.currentBreakpoint, isMoreLiveDetail: $isLiveMoreDetail })
+              ProductPicture({ pageBreakpoint: this.currentBreakpoint, isMoreLiveDetail: $isLiveMoreDetail,
+                    isShareSheetVisible: $isShareSheetVisible })
             }
             .padding({ top: deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? 0 : this.topRectHeight })
             .height(CommonConstants.FULL_PERCENT)
@@ -171,6 +177,15 @@ export struct ProductHome {
       .maxSideBarWidth(this.getUIContext().px2vp(this.windowWidth) / 3)
       .autoHide(false)
       // [End product_side_bar_container]
+
+        if (this.isShareSheetVisible) {
+          ShareSheet({
+            isVisible: $isShareSheetVisible,
+            payloadType: 'product',
+            payloadJson: DetailShareHelper.buildProductPayload()
+          })
+        }
+      }
     }
     .hideTitleBar(true)
   }

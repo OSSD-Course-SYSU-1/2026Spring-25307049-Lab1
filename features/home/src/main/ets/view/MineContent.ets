@@ -3,7 +3,8 @@
  * This replaces the previously empty "我的" tab.
  */
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ResourceUtil, ShareSheet } from '@ohos/commons';
+import { MineShareHelper } from '../share/MineShareHelper';
 
 @Component
 export struct MineContent {
@@ -12,6 +13,7 @@ export struct MineContent {
   @State favorites: FavoriteItem[] = [];
   @State browsingHistory: BrowsingHistoryItem[] = [];
   @State activeTab: number = 0;
+  @State isShareSheetVisible: boolean = false;
   private tabTitles: string[] = ['我的收藏', '浏览历史'];
 
   aboutToAppear(): void {
@@ -359,51 +361,83 @@ export struct MineContent {
   }
 
   build() {
-    Column() {
-      Scroll() {
-        Column() {
-          this.UserProfileHeader()
-          this.StatsRow()
-
-          // Menu entries
+    Stack() {
+      Column() {
+        Scroll() {
           Column() {
-            this.MenuEntry($r('app.media.icon_order'), '我的订单')
-            Divider().color('#F1F3F5').margin({ left: 16 })
-            this.MenuEntry($r('app.media.icon_pay'), '收货地址')
-            Divider().color('#F1F3F5').margin({ left: 16 })
-            this.MenuEntry($r('app.media.icon_order'), '优惠券')
-          }
-          .backgroundColor(Color.White)
-          .borderRadius(12)
-          .margin({ left: 16, right: 16, top: 16 })
+            this.UserProfileHeader()
+            this.StatsRow()
 
-          // Tabs for favorites and history
-          Column() {
-            this.TabBar()
+            // Share app data button
+            Row() {
+              Text('📤')
+                .fontSize(16)
+              Text('分享应用数据')
+                .fontSize(14)
+                .fontWeight(FontWeight.Medium)
+                .fontColor('#CF0A2C')
+                .margin({ left: 6 })
+            }
+            .width(CommonConstants.FULL_PERCENT)
+            .justifyContent(FlexAlign.Center)
+            .backgroundColor(Color.White)
+            .borderRadius(12)
+            .padding({ top: 14, bottom: 14 })
+            .margin({ left: 16, right: 16, top: 12 })
+            .onClick(() => {
+              this.isShareSheetVisible = true;
+            })
 
+            // Menu entries
             Column() {
-              if (this.activeTab === 0) {
-                this.FavoritesList()
-              } else {
-                this.BrowsingHistoryList()
-              }
+              this.MenuEntry($r('app.media.icon_order'), '我的订单')
+              Divider().color('#F1F3F5').margin({ left: 16 })
+              this.MenuEntry($r('app.media.icon_pay'), '收货地址')
+              Divider().color('#F1F3F5').margin({ left: 16 })
+              this.MenuEntry($r('app.media.icon_order'), '优惠券')
             }
             .backgroundColor(Color.White)
-          }
-          .margin({ left: 16, right: 16, top: 16 })
+            .borderRadius(12)
+            .margin({ left: 16, right: 16, top: 16 })
 
-          Blank()
+            // Tabs for favorites and history
+            Column() {
+              this.TabBar()
+
+              Column() {
+                if (this.activeTab === 0) {
+                  this.FavoritesList()
+                } else {
+                  this.BrowsingHistoryList()
+                }
+              }
+              .backgroundColor(Color.White)
+            }
+            .margin({ left: 16, right: 16, top: 16 })
+
+            Blank()
+          }
+          .padding({
+            top: deviceInfo.deviceType !== CommonConstants.DEVICE_TYPES[0] ? this.topRectHeight : 0,
+            bottom: 24
+          })
         }
-        .padding({
-          top: deviceInfo.deviceType !== CommonConstants.DEVICE_TYPES[0] ? this.topRectHeight : 0,
-          bottom: 24
+        .scrollBar(BarState.Off)
+        .layoutWeight(1)
+        .width(CommonConstants.FULL_PERCENT)
+      }
+      .backgroundColor('#F1F3F5')
+      .width(CommonConstants.FULL_PERCENT)
+      .height(CommonConstants.FULL_PERCENT)
+
+      if (this.isShareSheetVisible) {
+        ShareSheet({
+          isVisible: $isShareSheetVisible,
+          payloadType: 'appData',
+          payloadJson: MineShareHelper.buildAppDataPayload(this.favorites, this.browsingHistory)
         })
       }
-      .scrollBar(BarState.Off)
-      .layoutWeight(1)
-      .width(CommonConstants.FULL_PERCENT)
     }
-    .backgroundColor('#F1F3F5')
     .width(CommonConstants.FULL_PERCENT)
     .height(CommonConstants.FULL_PERCENT)
   }
