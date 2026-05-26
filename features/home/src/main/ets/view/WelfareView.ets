@@ -68,7 +68,7 @@ export struct WelfareView {
           .justifyContent(FlexAlign.Start)
           .backgroundColor(Color.White)
           .onClick(() => {
-            this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+            this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
           })
         }, (item: IconInfo, index: number) => index + JSON.stringify(item))
       }

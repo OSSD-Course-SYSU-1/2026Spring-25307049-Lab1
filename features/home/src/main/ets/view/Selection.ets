@@ -80,7 +80,7 @@ export struct Selection {
             }
             .width(CommonConstants.FULL_PERCENT)
             .onClick(() => {
-              this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+              this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
             })
           }
           .width(CommonConstants.FULL_PERCENT)

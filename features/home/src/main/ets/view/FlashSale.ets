@@ -81,7 +81,7 @@ export struct FlashSale {
             .width(CommonConstants.FULL_PERCENT)
             .height(CommonConstants.FULL_PERCENT)
             .onClick(() => {
-              this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+              this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
             })
           }
           .height(this.getGridColHeight())

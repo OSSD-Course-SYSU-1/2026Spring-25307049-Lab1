@@ -48,7 +48,7 @@ export struct RecommendedProductView {
         .width(this.getSwiperWidth(this.currentBreakpoint, this.windowWidth))
         .height(this.getSwiperWidth(this.currentBreakpoint, this.windowWidth))
         .onClick(() => {
-          this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2]);
+          this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
         })
       }, (item: Resource, index: number) => JSON.stringify(item) + index)
     }
