@@ -19,6 +19,8 @@ import { FooterTab, FooterTabViewModel } from '../viewmodel/FooterTabViewModel';
 import { HomeContent } from './HomeContent';
 import { ClassifyContent } from './ClassifyContent';
 import { ShoppingBagContent } from './ShoppingBagContent';
+import { MineContent } from './MineContent';
+import { SearchView } from './SearchView';
 
 @Component
 export struct Home {
@@ -74,6 +76,7 @@ export struct Home {
         .tabBar(this.BottomTabBuilder(this.tabList[3], 3))
 
         TabContent() {
+          MineContent()
         }
         .tabBar(this.BottomTabBuilder(this.tabList[4], 4))
       }

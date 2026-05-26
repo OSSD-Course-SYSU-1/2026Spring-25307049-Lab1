@@ -21,6 +21,7 @@ import { DetailConstants } from '../constants/DetailConstants';
 import { ProductPrice } from './ProductPrice';
 import { ProductDiscount } from './ProductDiscount';
 import { ProductConfig, UserComments } from './ProductConfig';
+import { PriceComparison } from './PriceComparison';
 
 @Component
 export struct ProductPicture {
@@ -256,6 +257,7 @@ export struct ProductInfo {
       ProductPrice({ pageBreakpoint: this.pageBreakpoint })
       ProductDiscount(this.pageBreakpoint)
       ProductConfig(this.pageBreakpoint)
+      PriceComparison({ pageBreakpoint: this.pageBreakpoint })
       UserComments()
     }
     .backgroundColor($r('app.color.products_info'))

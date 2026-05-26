@@ -18,7 +18,7 @@ import { CommonConstants, Logger, WindowUtil } from '@ohos/commons/Index';
 import { DetailConstants, ProductHome } from '@ohos/detail/Index';
 import { ProductMoreDetail } from '@ohos/detail/Index';
 import { LiveHome } from '@ohos/detail/Index';
-import { Home } from '@ohos/home/Index';
+import { Home, SearchView } from '@ohos/home/Index';
 import { ClassifyConstants } from '@ohos/home/Index';
 
 @Entry
@@ -59,6 +59,8 @@ struct Index {
       LiveHome()
     } else if (name === ClassifyConstants.PAGE_INFO_LIST[1]) {
       ProductMoreDetail()
+    } else if (name === 'searchView') {
+      SearchView()
     } else {
       ProductHome()
     }

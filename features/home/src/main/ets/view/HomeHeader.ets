@@ -16,11 +16,13 @@
 import { deviceInfo } from '@kit.BasicServicesKit';
 import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
+import { ClassifyConstants } from '../constants/ClassifyConstants';
 
 @Component
 export struct HomeHeader {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
 
   build() {
@@ -111,6 +113,9 @@ export struct HomeHeader {
           })
           .width(CommonConstants.FULL_PERCENT)
           .enableKeyboardOnFocus(false)
+          .onClick(() => {
+            this.pageInfos.pushPathByName('searchView', undefined);
+          })
 
         // Search image.
         Image($r('app.media.ic_public_search'))
