@@ -1,6 +1,6 @@
 import { DeviceInfo } from '../DeviceInfo';
 import { TransferState } from '../TransferState';
-import { ShareSessionManager, SessionStateCallback } from '../manager/ShareSessionManager';
+import { ShareSessionManager, SessionStateCallback, SessionStateData } from '../manager/ShareSessionManager';
 
 /**
  * Bottom sheet component for the "AirDrop" sharing feature.
@@ -64,17 +64,16 @@ export struct ShareSheet {
     this.statusText = '正在搜索附近设备...';
     this.isSimulatedMode = true;
 
-    const callback: SessionStateCallback = (state: TransferState, data?: Object): void => {
+    const callback: SessionStateCallback = (state: TransferState, data?: SessionStateData): void => {
       this.transferState = state;
       this.updateStatusText();
 
       if (data) {
-        const extra = data as Record<string, Object>;
-        if (extra['deviceList'] !== undefined) {
-          this.deviceList = extra['deviceList'] as DeviceInfo[];
+        if (data.deviceList !== undefined) {
+          this.deviceList = data.deviceList!;
         }
-        if (extra['progress'] !== undefined) {
-          this.transferProgress = extra['progress'] as number;
+        if (data.progress !== undefined) {
+          this.transferProgress = data.progress!;
           this.progressLabel = '已发送 ' + Math.floor(this.transferProgress) + '%';
         }
       }
@@ -215,16 +214,14 @@ export struct ShareSheet {
             .width(90).height(90)
             .stroke('#E8E8E8').strokeWidth(1)
             .fill(Color.Transparent)
+          // Radar sweep indicator: a small dot orbiting the circle
           Circle()
-            .width(120).height(120)
-            .fill(new LinearGradient([
-              { color: '#4DC4E8FF', offset: 0 },
-              { color: '#00C4E8FF', offset: 1 }
-            ]))
-            .sweepAngle(60)
-            .startAngle(this.radarAngle - 60)
-            .rotate({ angle: this.radarAngle })
-            .opacity(0.4)
+            .width(8).height(8)
+            .fill('#C4E8FF')
+            .position({
+              x: 60 + 48 * Math.cos(this.radarAngle * Math.PI / 180) - 4,
+              y: 60 + 48 * Math.sin(this.radarAngle * Math.PI / 180) - 4
+            })
           Text('📤')
             .fontSize(28)
             .opacity(0.6)

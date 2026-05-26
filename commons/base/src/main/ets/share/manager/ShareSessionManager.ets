@@ -4,9 +4,17 @@ import { DeviceDiscoveryManager, DeviceFoundCallback, DiscoveryCompleteCallback 
 import { DataTransferManager, TransferProgressCallback } from './DataTransferManager';
 
 /**
+ * Typed container for session state data passed to callbacks.
+ */
+export class SessionStateData {
+  deviceList: DeviceInfo[] | undefined;
+  progress: number | undefined;
+}
+
+/**
  * Callback for session state changes.
  */
-export type SessionStateCallback = (state: TransferState, data?: Object) => void;
+export type SessionStateCallback = (state: TransferState, data?: SessionStateData) => void;
 
 /**
  * Singleton orchestrator for the entire share session lifecycle.
@@ -34,9 +42,6 @@ export class ShareSessionManager {
     return ShareSessionManager.instance;
   }
 
-  /**
-   * Start device discovery. Notifies callback as state and device list change.
-   */
   startDiscovery(onStateChange: SessionStateCallback): void {
     this.onStateChange = onStateChange;
     this.deviceList = [];
@@ -46,12 +51,13 @@ export class ShareSessionManager {
     const onDeviceFound: DeviceFoundCallback = (device: DeviceInfo) => {
       this.deviceList.push(device);
       if (this.onStateChange) {
-        this.onStateChange(this.currentState, { deviceList: this.deviceList });
+        const data: SessionStateData = new SessionStateData();
+        data.deviceList = this.deviceList;
+        this.onStateChange(this.currentState, data);
       }
     };
 
     const onDiscoveryComplete: DiscoveryCompleteCallback = (_devices: DeviceInfo[]) => {
-      // If no devices found, stay in IDLE (UI shows empty state)
       if (this.deviceList.length === 0) {
         this.setState(TransferState.IDLE);
       }
@@ -60,9 +66,6 @@ export class ShareSessionManager {
     this.discoveryManager.startDiscovery(onDeviceFound, onDiscoveryComplete);
   }
 
-  /**
-   * Select a device and initiate transfer.
-   */
   sendToDevice(device: DeviceInfo, payload: string): void {
     this.selectedDevice = device;
     this.currentPayload = payload;
@@ -70,12 +73,16 @@ export class ShareSessionManager {
     this.setState(TransferState.CONNECTING);
 
     const onProgress: TransferProgressCallback = (progress: number, state: TransferState) => {
-      this.setState(state, { progress: progress });
+      const data: SessionStateData = new SessionStateData();
+      data.progress = progress;
+      this.setState(state, data);
     };
 
     const onComplete = (success: boolean, _error?: string) => {
       if (success) {
-        this.setState(TransferState.DONE, { progress: 100 });
+        const data: SessionStateData = new SessionStateData();
+        data.progress = 100;
+        this.setState(TransferState.DONE, data);
       } else {
         this.setState(TransferState.ERROR);
       }
@@ -84,18 +91,12 @@ export class ShareSessionManager {
     this.transferManager.sendData(device.deviceId, payload, onProgress, onComplete);
   }
 
-  /**
-   * Retry the last failed transfer.
-   */
   retry(): void {
     if (this.selectedDevice && this.currentPayload) {
       this.sendToDevice(this.selectedDevice, this.currentPayload);
     }
   }
 
-  /**
-   * Cancel the current session.
-   */
   cancel(): void {
     this.discoveryManager.stopDiscovery();
     this.transferManager.cancelTransfer();
@@ -105,28 +106,19 @@ export class ShareSessionManager {
     this.setState(TransferState.IDLE);
   }
 
-  /**
-   * Get the current list of discovered devices.
-   */
   getDeviceList(): DeviceInfo[] {
     return this.deviceList;
   }
 
-  /**
-   * Get the current transfer state.
-   */
   getCurrentState(): TransferState {
     return this.currentState;
   }
 
-  /**
-   * Whether we are in simulated mode.
-   */
   isSimulatedMode(): boolean {
     return this.discoveryManager.isSimulatedMode();
   }
 
-  private setState(state: TransferState, data?: Object): void {
+  private setState(state: TransferState, data?: SessionStateData): void {
     this.currentState = state;
     if (this.onStateChange) {
       this.onStateChange(state, data);

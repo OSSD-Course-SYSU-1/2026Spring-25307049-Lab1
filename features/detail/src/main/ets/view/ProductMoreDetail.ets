@@ -29,6 +29,7 @@ export struct ProductMoreDetail {
   @State isShoppingBag: boolean = false;
   @State isCustomerService: boolean = false;
   @State isLiveMoreDetail: boolean = false;
+  @State isShareSheetVisible: boolean = false;
   @Consume('pageInfos') pageInfos: NavPathStack;
 
   aboutToAppear(): void {
@@ -57,7 +58,8 @@ export struct ProductMoreDetail {
               ProductPicture({
                 pageBreakpoint: new BreakpointType(BreakpointConstants.BREAKPOINT_SM, BreakpointConstants.BREAKPOINT_SM,
                   BreakpointConstants.BREAKPOINT_MD).getValue(this.currentBreakpoint),
-                isMoreLiveDetail: $isLiveMoreDetail
+                isMoreLiveDetail: $isLiveMoreDetail,
+                isShareSheetVisible: $isShareSheetVisible
               })
               ProductInfo({
                 pageBreakpoint: new BreakpointType(BreakpointConstants.BREAKPOINT_SM,

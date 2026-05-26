@@ -1,3 +1,18 @@
+/**
+ * Data class for mock device entries.
+ */
+export class MockDeviceEntry {
+  name: string;
+  type: string;
+  id: string;
+
+  constructor(name: string, type: string, id: string) {
+    this.name = name;
+    this.type = type;
+    this.id = id;
+  }
+}
+
 export class ShareConstants {
   /** KV store name for distributed data transfer */
   static readonly KV_STORE_ID: string = 'airdrop_share_store';
@@ -15,20 +30,12 @@ export class ShareConstants {
   static readonly SOCKET_PORT: number = 18888;
 
   /** Mock devices for demo mode when no real distributed devices are available */
-  static readonly MOCK_DEVICES: Array<{ name: string; type: string; id: string }> = [
-    { name: 'HUAWEI Mate 60 Pro', type: 'phone', id: 'mock-device-001' },
-    { name: 'HUAWEI MatePad Pro', type: 'tablet', id: 'mock-device-002' },
-    { name: 'HUAWEI P60 Pro', type: 'phone', id: 'mock-device-003' }
+  static readonly MOCK_DEVICES: MockDeviceEntry[] = [
+    new MockDeviceEntry('HUAWEI Mate 60 Pro', 'phone', 'mock-device-001'),
+    new MockDeviceEntry('HUAWEI MatePad Pro', 'tablet', 'mock-device-002'),
+    new MockDeviceEntry('HUAWEI P60 Pro', 'phone', 'mock-device-003')
   ];
 
   /** AppStorage key for received share data notification */
   static readonly RECEIVED_SHARE_KEY: string = 'received_share_data';
-
-  /** Share sheet title */
-  static readonly SHARE_TITLE = (context: Context): string =>
-    context.resourceManager.getStringSync($r('app.string.share_title', context).id);
-
-  /** Share sheet subtitle */
-  static readonly SHARE_SUBTITLE = (context: Context): string =>
-    context.resourceManager.getStringSync($r('app.string.share_subtitle', context).id);
 }

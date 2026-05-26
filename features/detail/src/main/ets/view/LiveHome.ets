@@ -33,6 +33,7 @@ export struct LiveHome {
   @State utilMoreDetail: boolean = true;
   @State utilShoppingBag: boolean = false;
   @State utilCustomerService: boolean = false;
+  @State isShareSheetVisible: boolean = false;
   @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
   private onFoldStatusChange: Callback<display.FoldStatus> = (data: display.FoldStatus) => {
@@ -169,7 +170,8 @@ export struct LiveHome {
           Column() {
             Scroll() {
               Column() {
-                ProductPicture({ pageBreakpoint: BreakpointConstants.BREAKPOINT_SM, isMoreLiveDetail: $isMoreDetail })
+                ProductPicture({ pageBreakpoint: BreakpointConstants.BREAKPOINT_SM, isMoreLiveDetail: $isMoreDetail,
+                  isShareSheetVisible: $isShareSheetVisible })
                 ProductInfo({ pageBreakpoint: BreakpointConstants.BREAKPOINT_SM })
               }
               .padding({
