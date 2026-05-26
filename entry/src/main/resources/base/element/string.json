@@ -1,0 +1,1296 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "ArkUI Component Example"
+    },
+    {
+      "name": "index_title",
+      "value": "ArkUI Component Example"
+    },
+    {
+      "name": "popup_position_label",
+      "value": "Pop-up position"
+    },
+    {
+      "name": "bottom_hint_label",
+      "value": "Bottom hint"
+    },
+    {
+      "name": "designated_location_hint_label",
+      "value": "Designated location hint"
+    },
+    {
+      "name": "responsive_design_label",
+      "value": "Responsive design"
+    },
+    {
+      "name": "default_width_in_portrait_mode_label",
+      "value": "Default width in portrait mode"
+    },
+    {
+      "name": "max_width_in_portrait_mode_label",
+      "value": "Maximum width in portrait mode"
+    },
+    {
+      "name": "landscape_specifications_label",
+      "value": "Landscape specifications"
+    },
+    {
+      "name": "default_width_in_landscape_mode_label",
+      "value": "Default width in landscape mode"
+    },
+    {
+      "name": "max_width_in_landscape_mode_label",
+      "value": "Maximum width in landscape mode"
+    },
+    {
+      "name": "operation_components_label",
+      "value": "Operation Components"
+    },
+    {
+      "name": "selection_components_label",
+      "value": "Selection Components"
+    },
+    {
+      "name": "display_components_label",
+      "value": "Display Components"
+    },
+    {
+      "name": "input_components_label",
+      "value": "Input Components"
+    },
+    {
+      "name": "navigation_components_label",
+      "value": "Navigation Components"
+    },
+    {
+      "name": "container_components_label",
+      "value": "Container Components"
+    },
+    {
+      "name": "standard_search_box_label",
+      "value": "Standard search box"
+    },
+    {
+      "name": "search_box_with_icon_inside_label",
+      "value": "Search box with icon inside"
+    },
+    {
+      "name": "search_box_with_search_button_label",
+      "value": "Search box with search button"
+    },
+    {
+      "name": "search_box_and_icon_label",
+      "value": "Search box + Icon"
+    },
+    {
+      "name": "icon_and_search_box_label",
+      "value": "Icon + Search box"
+    },
+    {
+      "name": "icon_and_search_box_and_icon_label",
+      "value": "Icon + Search box + Icon"
+    },
+    {
+      "name": "recommended_search_box_label",
+      "value": "Recommended search box"
+    },
+    {
+      "name": "list_counter_label",
+      "value": "List Counter"
+    },
+    {
+      "name": "compact_counter_label",
+      "value": "Compact Counter"
+    },
+    {
+      "name": "inline_counter_label",
+      "value": "Inline Counter"
+    },
+    {
+      "name": "recommended_style_counter_label",
+      "value": "Recommended Style Counter"
+    },
+    {
+      "name": "single_line_text_box_label",
+      "value": "Single-Line Text Box"
+    },
+    {
+      "name": "multi_line_text_box_label",
+      "value": "Multi-Line Text Box"
+    },
+    {
+      "name": "full_width_text_box_label",
+      "value": "Full-width Text Box"
+    },
+    {
+      "name": "view_example_label",
+      "value": "View Example"
+    },
+    {
+      "name": "icon_text_box_label",
+      "value": "Text Box with an Icon"
+    },
+    {
+      "name": "input_box_with_error_message_label",
+      "value": "Text Box with Error Message"
+    },
+    {
+      "name": "input_box_with_character_counter_label",
+      "value": "Text Box with Character Counter"
+    },
+    {
+      "name": "displaying_and_hiding_passwords_label",
+      "value": "Displaying and Hiding Passwords"
+    },
+    {
+      "name": "input_box_detail_error_msg_label",
+      "value": "Format error, please do not enter special characters"
+    },
+    {
+      "name": "password_input_box_detail_error_msg_label",
+      "value": "The password must contain at least 8 characters"
+    },
+    {
+      "name": "subtitle_tab_style_label",
+      "value": "Tab Style"
+    },
+    {
+      "name": "default_tab_style_label",
+      "value": "Default Tab Style"
+    },
+    {
+      "name": "custom_tab_style_label",
+      "value": "Custom Tab Style"
+    },
+    {
+      "name": "subtitle_blur_style_label",
+      "value": "Blur Style"
+    },
+    {
+      "name": "backdrop_blur_label",
+      "value": "Backdrop Blur"
+    },
+    {
+      "name": "gradient_blur_label",
+      "value": "Gradient Blur"
+    },
+    {
+      "name": "subtitle_layout_principles_label",
+      "value": "Layout Principles"
+    },
+    {
+      "name": "left_right_layout_label",
+      "value": "Left-Right Layout"
+    },
+    {
+      "name": "split_view_sync_nav_label",
+      "value": "Split-View Layout in Sync with the Navigation Structure"
+    },
+    {
+      "name": "overlay_label",
+      "value": "Overlay"
+    },
+    {
+      "name": "modal_label",
+      "value": "Modal"
+    },
+    {
+      "name": "non_modal_label",
+      "value": "Non_Modal"
+    },
+    {
+      "name": "modal_height_label",
+      "value": "Modal Height"
+    },
+    {
+      "name": "bottom_panel_label",
+      "value": "Bottom Panel Modal"
+    },
+    {
+      "name": "bottom_panel_scroll_response_priority_label",
+      "value": "Bottom panel scroll response priority"
+    },
+    {
+      "name": "landscape_display_label",
+      "value": "Landscape Display"
+    },
+    {
+      "name": "slide_content_and_title_label",
+      "value": "Slide in the content and title bar area"
+    },
+    {
+      "name": "panel_navigation_label",
+      "value": "Panel Navigation"
+    },
+    {
+      "name": "conversion_same_panel_label",
+      "value": "Conversion on the same panel page"
+    },
+    {
+      "name": "multiple_panels_label",
+      "value": "Multiple Panels"
+    },
+    {
+      "name": "operation_confirmation_dialog_label",
+      "value": "Confirmation Dialogs: Used for irreversible operations with serious consequences, such as deleting, resetting, discarding changes, or stopping a process."
+    },
+    {
+      "name": "cancel_label",
+      "value": "Cancel"
+    },
+    {
+      "name": "delete_label",
+      "value": "Delete"
+    },
+    {
+      "name": "operation_confirmation_label",
+      "value": "Operation Confirmation Dialog"
+    },
+    {
+      "name": "title_area_label",
+      "value": "Title Area"
+    },
+    {
+      "name": "content_label",
+      "value": "Content"
+    },
+    {
+      "name": "basic_components_of_dialog_label",
+      "value": "Basic components of dialog"
+    },
+    {
+      "name": "double_line_title_dialog_label",
+      "value": "Double-line Title Dialog"
+    },
+    {
+      "name": "three_line_button_dialog_label",
+      "value": "Three-line Button Dialog"
+    },
+    {
+      "name": "selection_dialog_label",
+      "value": "Selection Dialog"
+    },
+    {
+      "name": "option_text_one_label",
+      "value": "Option text one"
+    },
+    {
+      "name": "option_text_two_label",
+      "value": "Option text two"
+    },
+    {
+      "name": "option_text_three_label",
+      "value": "Option text three"
+    },
+    {
+      "name": "graphical_dialog_label",
+      "value": "Graphical Dialog"
+    },
+    {
+      "name": "confirm_label",
+      "value": "Confirm"
+    },
+    {
+      "name": "title_label",
+      "value": "Title"
+    },
+    {
+      "name": "input_dialog_label",
+      "value": "With Input Dialog"
+    },
+    {
+      "name": "message_content_label",
+      "value": "Use this component to provide feedback when an operation fails (e.g., network error, low battery) or is performed incorrectly (e.g., invalid fingerprint input). Whenever possible, the dialog should include actionable options, shortcuts, or help links to resolve the issue.\n\nIt is also used to display content details (e.g., file properties) or critical information required before proceeding, such as permission requests."
+    },
+    {
+      "name": "selected_content_text_label",
+      "value": "Selected Content Text"
+    },
+    {
+      "name": "information_dialog_label",
+      "value": "Information Dialog"
+    },
+    {
+      "name": "content_type_horizontally_swipe_interactive_list_label",
+      "value": "Content type horizontally swipe interactive list"
+    },
+    {
+      "name": "avatar_and_double_line_text_label",
+      "value": "Avatar + Double-line Text"
+    },
+    {
+      "name": "icon_and_small_button_label",
+      "value": "Icon + Small Button"
+    },
+    {
+      "name": "small_button_label",
+      "value": "Small Button"
+    },
+    {
+      "name": "sixteen_by_nine_illustration_label",
+      "value": "Sixteen by nine illustration"
+    },
+    {
+      "name": "content_type_list_label",
+      "value": "Content Type List"
+    },
+    {
+      "name": "small_image_and_three_line_list_label",
+      "value": "Small Image + Three-line List"
+    },
+    {
+      "name": "three_by_four_small_image_label",
+      "value": "Three by four small image"
+    },
+    {
+      "name": "image_and_three_line_list_label",
+      "value": "Image + Three-line List"
+    },
+    {
+      "name": "three_by_four_image_label",
+      "value": "Three by four image"
+    },
+    {
+      "name": "efficiency_oriented_list_label",
+      "value": "Efficiency-Oriented List"
+    },
+    {
+      "name": "single_line_list_and_drop_down_options_label",
+      "value": "List + Drop-down Options"
+    },
+    {
+      "name": "drop_down_options_label",
+      "value": "Drop-down"
+    },
+    {
+      "name": "right_side_checkbox_label",
+      "value": "Right-side Checkbox"
+    },
+    {
+      "name": "double_line_list_and_switch_label",
+      "value": "Double-line List + Switch"
+    },
+    {
+      "name": "right_side_image_label",
+      "value": "Right-side Image"
+    },
+    {
+      "name": "three_line_list_label",
+      "value": "Three-line List"
+    },
+    {
+      "name": "icon_and_single_line_text_label",
+      "value": "Icon + Single-line text"
+    },
+    {
+      "name": "two_icons_on_the_right_label",
+      "value": "Two icons on the tight"
+    },
+    {
+      "name": "icon_and_double_line_text_label",
+      "value": "Icon + Double-line text"
+    },
+    {
+      "name": "right_text_label",
+      "value": "Right Text"
+    },
+    {
+      "name": "horizontal_label",
+      "value": "Horizontal"
+    },
+    {
+      "name": "vertical_side_floating_action_bar_label",
+      "value": "Vertical side floating action bar"
+    },
+    {
+      "name": "button_size_label",
+      "value": "Button Size"
+    },
+    {
+      "name": "button_type_label",
+      "value": "Button Type"
+    },
+    {
+      "name": "disabled_status_or_disable_label",
+      "value": "Disable Status/Disable"
+    },
+    {
+      "name": "icon_button_label",
+      "value": "Icon Button"
+    },
+    {
+      "name": "button_type_or_normal_label",
+      "value": "First Button Type/Normal"
+    },
+    {
+      "name": "emphasize_the_background_label",
+      "value": "Emphasized"
+    },
+    {
+      "name": "plain_background_label",
+      "value": "Plain"
+    },
+    {
+      "name": "icon_only_label",
+      "value": "Icon"
+    },
+    {
+      "name": "with_text_label",
+      "value": "TextIcon"
+    },
+    {
+      "name": "disabled_status_label",
+      "value": "Second Disabled Status"
+    },
+    {
+      "name": "loading_status_label",
+      "value": "Loading Status"
+    },
+    {
+      "name": "drop_down_menu_label",
+      "value": "Drop-down menu"
+    },
+    {
+      "name": "with_icon_styled_menu_label",
+      "value": "With icon-styled menu"
+    },
+    {
+      "name": "long_press_the_floating_menu_label",
+      "value": "Long press the floating menu"
+    },
+    {
+      "name": "with_title_styled_menu_label",
+      "value": "With title styled menu"
+    },
+    {
+      "name": "basic_style_label",
+      "value": "Basic Style"
+    },
+    {
+      "name": "floating_menu_label",
+      "value": "Floating Menu"
+    },
+    {
+      "name": "photo_label",
+      "value": "Photo"
+    },
+    {
+      "name": "photo_album_label",
+      "value": "Photo Album"
+    },
+    {
+      "name": "moment_label",
+      "value": "Moment"
+    },
+    {
+      "name": "capsule_style_single_selection_label",
+      "value": "Capsule style-single selection"
+    },
+    {
+      "name": "capsule_style_single_selection_right_side_icon_label",
+      "value": "Capsule style-single selection,right-side icon"
+    },
+    {
+      "name": "capsule_style_multiple_choice_label",
+      "value": "Capsule Style-Multiple Choice"
+    },
+    {
+      "name": "underline_style_horizontal_label",
+      "value": "Underline Style-Horizontal"
+    },
+    {
+      "name": "sub_tab_label",
+      "value": "SubTab"
+    },
+    {
+      "name": "underline_style_vertical_label",
+      "value": "Underline Style-Vertical"
+    },
+    {
+      "name": "sub_tab_one_label",
+      "value": "SubTab1"
+    },
+    {
+      "name": "sub_tab_two_label",
+      "value": "SubTab2"
+    },
+    {
+      "name": "sub_tab_three_label",
+      "value": "SubTab3"
+    },
+    {
+      "name": "sub_tab_four_label",
+      "value": "SubTab4"
+    },
+    {
+      "name": "sub_tab_five_label",
+      "value": "SubTab5"
+    },
+    {
+      "name": "ordinary_title_bar_label",
+      "value": "Ordinary Title Bar"
+    },
+    {
+      "name": "plain_double_row_title_bar_label",
+      "value": "Plain Double Row Title Bar"
+    },
+    {
+      "name": "drawer_style_title_bar_label",
+      "value": "Drawer Style Title Bar"
+    },
+    {
+      "name": "edit_page_title_bar_label",
+      "value": "Edit Page Title Bar"
+    },
+    {
+      "name": "edit_label",
+      "value": "Edit"
+    },
+    {
+      "name": "emphasized_title_bar_label",
+      "value": "Emphasized Title Bar"
+    },
+    {
+      "name": "double_line_title_icon_in_the_upper_right_corner_label",
+      "value": "Double-line title icon in the upper right corner"
+    },
+    {
+      "name": "emphasized_title_single_line_without_icon_label",
+      "value": "Emphasized title-single-line without icon"
+    },
+    {
+      "name": "secondary_page_single_title_bar_label",
+      "value": "Secondary page single title bar"
+    },
+    {
+      "name": "secondary_page_double_title_bar_label",
+      "value": "Secondary page double title bar"
+    },
+    {
+      "name": "title_bar_label",
+      "value": "Title Bar"
+    },
+    {
+      "name": "basic_type_label",
+      "value": "Basic Type"
+    },
+    {
+      "name": "custom_color_label",
+      "value": "Custom Color"
+    },
+    {
+      "name": "list_style_label",
+      "value": "List Style"
+    },
+    {
+      "name": "recommended_style_label",
+      "value": "Recommended Style"
+    },
+    {
+      "name": "capsule_shaped_progress_bar_label",
+      "value": "Capsule Shaped Progress Bar"
+    },
+    {
+      "name": "circle_progress_bar_label",
+      "value": "Circle Progress Bar"
+    },
+    {
+      "name": "linear_progress_bar_label",
+      "value": "Linear Progress Bar"
+    },
+    {
+      "name": "saving_label",
+      "value": "Saving..."
+    },
+    {
+      "name": "no_clear_progress_bar_label",
+      "value": "No Clear Progress Bar"
+    },
+    {
+      "name": "for_component_combination_scenarios_label",
+      "value": "Combination Scenarios"
+    },
+    {
+      "name": "for_full_page_loading_scenarios_label",
+      "value": "Loading Scenarios"
+    },
+    {
+      "name": "interactive_rating_bar_label",
+      "value": "Interactive Rating Bar"
+    },
+    {
+      "name": "non_interactive_rating_bar_label",
+      "value": "Non-interactive Rating Bar"
+    },
+    {
+      "name": "common_scenarios_for_non_interactive_rating_bar_label",
+      "value": "Common scenarios for non-interactive rating bar"
+    },
+    {
+      "name": "scheduled_shutdown_label",
+      "value": "Scheduled Shutdown"
+    },
+    {
+      "name": "residency_label",
+      "value": "Residency"
+    },
+    {
+      "name": "configuration_type_classification_label",
+      "value": "Configuration Type Classification"
+    },
+    {
+      "name": "scheduled_shutdown_mode_label",
+      "value": "Scheduled Shutdown Mode"
+    },
+    {
+      "name": "resident_mode_label",
+      "value": "Resident Mode"
+    },
+    {
+      "name": "phone_in_landscape_mode_maximum_width_label",
+      "value": "Phone in landscape mode maximum width 400"
+    },
+    {
+      "name": "landscape_mode_label",
+      "value": "Landscape Mode"
+    },
+    {
+      "name": "selected_label",
+      "value": "Selected"
+    },
+    {
+      "name": "not_selected_label",
+      "value": "Not Selected"
+    },
+    {
+      "name": "default_select_state_label",
+      "value": "Default TICK Select State"
+    },
+    {
+      "name": "default_style_label",
+      "value": "DOT Default Style"
+    },
+    {
+      "name": "common_combination_types_label",
+      "value": "Common combination types"
+    },
+    {
+      "name": "blue_hand_following_slider_label",
+      "value": "The blue bar of the continuous slider follows hand movement"
+    },
+    {
+      "name": "slider_with_bubble_label",
+      "value": "Slider with bubble"
+    },
+    {
+      "name": "intermittent_sliding_label",
+      "value": "Intermittent sliding"
+    },
+    {
+      "name": "select_two_label",
+      "value": "Select Two"
+    },
+    {
+      "name": "music_description_1_label",
+      "value": "Selected in high fidelity | Presenting every rich and clear musical detail."
+    },
+    {
+      "name": "music_description_2_label",
+      "value": "Indie Pop | Eternal Melody in the Twilight's Melancholic Beauty."
+    },
+    {
+      "name": "music_description_3_label",
+      "value": "Drum & Bass | Rhythmic Impact of Drums and Bass."
+    },
+    {
+      "name": "music_description_4_label",
+      "value": "Healing Light Music | A Harbor for Your Soul to Rest."
+    },
+    {
+      "name": "music_description_5_label",
+      "value": "Soothing Piano Melodies | Weaving a Gentle Moonlit Curtain for Dreams."
+    },
+    {
+      "name": "music_description_6_label",
+      "value": "Techno | A Carnival Party of Mechanical Beats and Electronic Sound Waves."
+    },
+    {
+      "name": "music_description_7_label",
+      "value": "Sunset Rock | The Beautifully Free and Romantic Blue Hour at Dusk"
+    },
+    {
+      "name": "music_description_8_label",
+      "value": "Indie Soul Melodies (US/EU) | Nocturnal Melancholy & Warmth"
+    },
+    {
+      "name": "music_description_9_label",
+      "value": "Electronic Music | Featuring Strong Driving Beats and Bass Rhythms"
+    },
+    {
+      "name": "music_description_10_label",
+      "value": "Musical Journey | Dream Chaser Guides You into the Poetry of Distant Lands"
+    },
+    {
+      "name": "custom_type_label",
+      "value": "Custom Type"
+    },
+    {
+      "name": "customize_parameters_such_as_rounded_corners_and_colors_label",
+      "value": "Customize rounded corners and colors"
+    },
+    {
+      "name": "customize_parameters_such_as_size_and_color_label",
+      "value": "Customize size and color"
+    },
+    {
+      "name": "toggle_label",
+      "value": "Toggle"
+    },
+    {
+      "name": "default_enabled_state_label",
+      "value": "Default enabled state"
+    },
+    {
+      "name": "portrait_display_label",
+      "value": "Portrait Display"
+    },
+    {
+      "name": "comment_section_content_info_label",
+      "value": "Looking ahead, Huawei will collaborate with global partners to translate industrial innovation concepts into effective, implementable solutions and standards. By delivering industry-leading Level 4 Autonomous Driving Network (ADN) solutions, we aim to empower carriers to fully advance toward high-level autonomous networks."
+    },
+    {
+      "name": "basic_composition_label",
+      "value": "Basic Composition"
+    },
+    {
+      "name": "common_dialog_label",
+      "value": "Common Dialog"
+    },
+    {
+      "name": "medium_sized_button_toast_label",
+      "value": "Medium-sized button"
+    },
+    {
+      "name": "small_sized_button_toast_label",
+      "value": "Small-sized button"
+    },
+    {
+      "name": "emphasized_button_toast_label",
+      "value": "Emphasized button (used to highlight the current action)"
+    },
+    {
+      "name": "normal_button_toast_label",
+      "value": "Normal button (general ui operations)"
+    },
+    {
+      "name": "textual_button_toast_label",
+      "value": "Textual button (plain text, no background)"
+    },
+    {
+      "name": "warning_button_toast_label",
+      "value": "Warning button"
+    },
+    {
+      "name": "loading_type_emphasized_button_toast_label",
+      "value": "Loading-type emphasis button"
+    },
+    {
+      "name": "loading_type_normal_button_toast_label",
+      "value": "Loading-type normal button"
+    },
+    {
+      "name": "loading_type_warning_button_toast_label",
+      "value": "Loading-type warning button"
+    },
+    {
+      "name": "loading_type_textual_button_toast_label",
+      "value": "Loading-type textual button"
+    },
+    {
+      "name": "more_playlist_recommendation_label",
+      "value": "Discover more playlists"
+    },
+    {
+      "name": "left_right_bottom_tab_layout_description_label",
+      "value": "Compatible with bar-style phones or folded foldables in landscape orientation"
+    },
+    {
+      "name": "share_button_toast_label",
+      "value": "Share button"
+    },
+    {
+      "name": "delete_button_toast_label",
+      "value": "Delete button"
+    },
+    {
+      "name": "download_complete_notification_label",
+      "value": "Download complete"
+    },
+    {
+      "name": "install_app_label",
+      "value": "Install"
+    },
+    {
+      "name": "installed_app_label",
+      "value": "Installed"
+    },
+    {
+      "name": "installation_successful_label",
+      "value": "Installation Successful"
+    },
+    {
+      "name": "no_more_label",
+      "value": "No more resources"
+    },
+    {
+      "name": "open_label",
+      "value": "Open"
+    },
+    {
+      "name": "inline_date_counter_label",
+      "value": "Inline date counter"
+    },
+    {
+      "name": "index_list_item_button_label",
+      "value": "按钮 Button"
+    },
+    {
+      "name": "index_list_item_menu_label",
+      "value": "菜单 Menu"
+    },
+    {
+      "name": "index_list_item_actionbar_label",
+      "value": "核心操作栏 ActionBar"
+    },
+    {
+      "name": "index_list_item_toggle_label",
+      "value": "开关 Toggle"
+    },
+    {
+      "name": "index_list_item_slider_label",
+      "value": "滑动条 Slider"
+    },
+    {
+      "name": "index_list_item_radio_label",
+      "value": "单选框 Radio"
+    },
+    {
+      "name": "index_list_item_rating_label",
+      "value": "评分条 Rating"
+    },
+    {
+      "name": "index_list_item_progress_label",
+      "value": "进度条 Progress"
+    },
+    {
+      "name": "index_list_item_snackbar_label",
+      "value": "即时操作 Snack Bar"
+    },
+    {
+      "name": "index_list_item_badge_label",
+      "value": "新事件标记 Badge"
+    },
+    {
+      "name": "index_list_item_toast_label",
+      "value": "即时反馈 Toast"
+    },
+    {
+      "name": "index_list_item_textbox_label",
+      "value": "文本框 Text Box"
+    },
+    {
+      "name": "index_list_item_searchbox_label",
+      "value": "搜索框 Search Box"
+    },
+    {
+      "name": "index_list_item_counter_label",
+      "value": "计数器 Counter"
+    },
+    {
+      "name": "index_list_item_bottom_tab_bar_label",
+      "value": "底部页签 Bottom Tab Bar"
+    },
+    {
+      "name": "index_list_item_title_bar_label",
+      "value": "标题栏 TitleBar"
+    },
+    {
+      "name": "index_list_item_sub_tabs_label",
+      "value": "子页签 SubTabs"
+    },
+    {
+      "name": "index_list_item_list_label",
+      "value": "列表 List"
+    },
+    {
+      "name": "index_list_item_dialog_label",
+      "value": "弹出框 Dialog"
+    },
+    {
+      "name": "index_list_item_bind_sheet_label",
+      "value": "半模态面板 BindSheet"
+    },
+    {
+      "name": "quantity_label",
+      "value": "Quantity"
+    },
+    {
+      "name": "action_bar_label",
+      "value": "ActionBar"
+    },
+    {
+      "name": "button_label",
+      "value": "Button"
+    },
+    {
+      "name": "menu_item_label",
+      "value": "Menu Item"
+    },
+    {
+      "name": "menu_header_label",
+      "value": "Title"
+    },
+    {
+      "name": "menu_label",
+      "value": "Menu"
+    },
+    {
+      "name": "empty_string_label",
+      "value": ""
+    },
+    {
+      "name": "large_label",
+      "value": "Large"
+    },
+    {
+      "name": "medium_label",
+      "value": "Medium"
+    },
+    {
+      "name": "free_label",
+      "value": "Free"
+    },
+    {
+      "name": "bind_sheet_label",
+      "value": "BindSheet"
+    },
+    {
+      "name": "bind_sheet_in_landscape_mode_label",
+      "value": "BindSheet In Landscape Mode"
+    },
+    {
+      "name": "button_text_in_all_caps_label",
+      "value": "BUTTON"
+    },
+    {
+      "name": "dialog_label",
+      "value": "Dialog"
+    },
+    {
+      "name": "auxiliary_text_label",
+      "value": "Auxiliary Text"
+    },
+    {
+      "name": "list_label",
+      "value": "List"
+    },
+    {
+      "name": "counter_label",
+      "value": "Counter"
+    },
+    {
+      "name": "search_placeholder_label",
+      "value": "Search"
+    },
+    {
+      "name": "search_button_label",
+      "value": "Search"
+    },
+    {
+      "name": "search_box_label",
+      "value": "Search Box"
+    },
+    {
+      "name": "textarea_placeholder_label_1",
+      "value": "Hint"
+    },
+    {
+      "name": "textarea_placeholder_label_2",
+      "value": "Input your word..."
+    },
+    {
+      "name": "textinput_placeholder_label_1",
+      "value": "Name"
+    },
+    {
+      "name": "textinput_placeholder_label_2",
+      "value": "Hint"
+    },
+    {
+      "name": "time_label_1",
+      "value": "At 11:56 this morning"
+    },
+    {
+      "name": "text_box_label",
+      "value": "Text Box"
+    },
+    {
+      "name": "bottom_tab_bar_label",
+      "value": "Bottom Tab Bar"
+    },
+    {
+      "name": "home_label",
+      "value": "Home"
+    },
+    {
+      "name": "concert_hall_label",
+      "value": "Concert Hall"
+    },
+    {
+      "name": "me_label",
+      "value": "Me"
+    },
+    {
+      "name": "photos_label",
+      "value": "Photos"
+    },
+    {
+      "name": "albums_label",
+      "value": "Albums"
+    },
+    {
+      "name": "highlight_label",
+      "value": "Highlight"
+    },
+    {
+      "name": "china_standard_time_label",
+      "value": "China Standard Time"
+    },
+    {
+      "name": "time_label_2",
+      "value": "Friday, December 1 st"
+    },
+    {
+      "name": "clock_label",
+      "value": "Clock"
+    },
+    {
+      "name": "world_clock_label",
+      "value": "World Clock"
+    },
+    {
+      "name": "stopwatch_label",
+      "value": "Stopwatch"
+    },
+    {
+      "name": "timer_label",
+      "value": "Timer"
+    },
+    {
+      "name": "sub_tab_title_label",
+      "value": "Subtab"
+    },
+    {
+      "name": "title_bar_title_label",
+      "value": "Title Bar"
+    },
+    {
+      "name": "single_list_1_label",
+      "value": "Single list 1"
+    },
+    {
+      "name": "single_list_2_label",
+      "value": "Single list 2"
+    },
+    {
+      "name": "marcia_label",
+      "value": "Marcia"
+    },
+    {
+      "name": "evelyn_label",
+      "value": "Evelyn"
+    },
+    {
+      "name": "tab_label",
+      "value": "Tab"
+    },
+    {
+      "name": "music_label",
+      "value": "music"
+    },
+    {
+      "name": "picture_label",
+      "value": "picture"
+    },
+    {
+      "name": "collect_label",
+      "value": "collect"
+    },
+    {
+      "name": "mic_label",
+      "value": "mic"
+    },
+    {
+      "name": "badge_label",
+      "value": "Badge"
+    },
+    {
+      "name": "loading_progress_label",
+      "value": "LoadingProgress"
+    },
+    {
+      "name": "downloading_tips_label",
+      "value": "Downloading..."
+    },
+    {
+      "name": "progress_label",
+      "value": "Progress"
+    },
+    {
+      "name": "snack_bar_label",
+      "value": "Snack Bar"
+    },
+    {
+      "name": "snack_bar_in_landscape_mode_label",
+      "value": "Snack Bar In Landscape Mode"
+    },
+    {
+      "name": "toast_label",
+      "value": "Toast"
+    },
+    {
+      "name": "radio_label",
+      "value": "Radio"
+    },
+    {
+      "name": "rating_label",
+      "value": "Rating"
+    },
+    {
+      "name": "common_slider_label",
+      "value": "Common Slider"
+    },
+    {
+      "name": "outset_slider_label",
+      "value": "Outset Slider"
+    },
+    {
+      "name": "inset_slider_label",
+      "value": "Inset Slider"
+    },
+    {
+      "name": "slider_label",
+      "value": "Slider"
+    },
+    {
+      "name": "toggle_title_label",
+      "value": "Toggle"
+    },
+    {
+      "name": "subtitle_label",
+      "value": "Subtitle"
+    },
+    {
+      "name": "sheet1_label",
+      "value": "Sheet1"
+    },
+    {
+      "name": "sheet2_label",
+      "value": "Sheet2"
+    },
+    {
+      "name": "phone_label",
+      "value": "Phone"
+    },
+    {
+      "name": "contacts_label",
+      "value": "Contacts"
+    },
+    {
+      "name": "favorites_label",
+      "value": "Favorites"
+    },
+    {
+      "name": "image_area_label",
+      "value": "Image area"
+    },
+    {
+      "name": "abc_label",
+      "value": "ABC"
+    },
+    {
+      "name": "def_label",
+      "value": "DEF"
+    },
+    {
+      "name": "ghi_label",
+      "value": "GHI"
+    },
+    {
+      "name": "jkl_label",
+      "value": "JKL"
+    },
+    {
+      "name": "mno_label",
+      "value": "MNO"
+    },
+    {
+      "name": "pqrs_label",
+      "value": "PQRS"
+    },
+    {
+      "name": "tuv_label",
+      "value": "TUV"
+    },
+    {
+      "name": "wxyz_label",
+      "value": "WXYZ"
+    },
+    {
+      "name": "special_p_label",
+      "value": "(P)"
+    },
+    {
+      "name": "plus_label",
+      "value": "+"
+    },
+    {
+      "name": "special_w_label",
+      "value": "(W)"
+    },
+    {
+      "name": "all_phone_label",
+      "value": "All"
+    },
+    {
+      "name": "missed_phone_label",
+      "value": "Missed"
+    },
+    {
+      "name": "a_moment_ago_label",
+      "value": "a moment ago"
+    },
+    {
+      "name": "one_minute_ago_label",
+      "value": "1 minute ago"
+    },
+    {
+      "name": "two_minute_ago_label",
+      "value": "2 minute ago"
+    },
+    {
+      "name": "wuhan_label",
+      "value": "Wuhan, Hubei"
+    }
+  ]
+}
