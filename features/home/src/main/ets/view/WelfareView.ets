@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, CURRENT_PRODUCT_ID_KEY, resolveProductId, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { IconInfo, IconInfoViewModel } from '../viewmodel/IconInfoViewModel';
 import { HomeButton } from './CommonView';
@@ -36,14 +36,16 @@ export struct WelfareView {
 
         Blank()
 
-        HomeButton(HomeConstants.BUTTON_TEXTS(this.context)[0])
+        HomeButton(HomeConstants.BUTTON_TEXTS(this.context)[0], () => {
+          ToastUtil.showFeaturePending('更多福利');
+        })
       }
       .justifyContent(FlexAlign.Start)
       .height($r('app.float.title_height'))
       .width(CommonConstants.FULL_PERCENT)
 
       Row() {
-        ForEach(this.getCurrentWelfareList(), (item: IconInfo) => {
+        ForEach(this.getCurrentWelfareList(), (item: IconInfo, index: number) => {
           Column() {
             Image(item.getIcon())
               .width(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_SM ?
@@ -68,6 +70,7 @@ export struct WelfareView {
           .justifyContent(FlexAlign.Start)
           .backgroundColor(Color.White)
           .onClick(() => {
+            AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, resolveProductId('', index));
             this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
           })
         }, (item: IconInfo, index: number) => index + JSON.stringify(item))

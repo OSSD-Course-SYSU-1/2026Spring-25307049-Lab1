@@ -1,4 +1,4 @@
-import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { ShoppingBagConstants } from '../constants/ShoppingBagConstants';
 
 @Component
@@ -7,6 +7,8 @@ export struct ShoppingCardFoot {
   @Prop selectedCount: number = 0;
   @Prop totalPrice: number = 0;
   public isMoreDetail: boolean = false;
+  onToggleAll?: () => void;
+  onSettlement?: () => void;
   private context: Context = this.getUIContext().getHostContext()!
 
   build() {
@@ -25,6 +27,11 @@ export struct ShoppingCardFoot {
             color: ResourceUtil.getCommonBorderColor()[2]
           })
           .shape(CheckBoxShape.ROUNDED_SQUARE)
+          .onChange((value: boolean) => {
+            if (this.onToggleAll) {
+              this.onToggleAll();
+            }
+          })
         Text(ShoppingBagConstants.SHOPPING_CARD_FOOT_TITLES(this.context)[0])
           .fontSize($r('app.float.shop_card_font_1'))
           .lineHeight($r('app.float.shop_card_line_1'))
@@ -82,6 +89,15 @@ export struct ShoppingCardFoot {
             left: $r('app.float.foot_button_margin')
           })
           .enabled(this.selectedCount > 0)
+          .onClick(() => {
+            if (this.selectedCount > 0) {
+              if (this.onSettlement) {
+                this.onSettlement();
+              } else {
+                ToastUtil.show('确认结算 ' + this.selectedCount.toString() + ' 件商品，合计￥' + this.totalPrice.toString());
+              }
+            }
+          })
       }
       .height(CommonConstants.FULL_PERCENT)
       .alignItems(VerticalAlign.Center)

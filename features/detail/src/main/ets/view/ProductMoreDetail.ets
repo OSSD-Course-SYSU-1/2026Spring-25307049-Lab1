@@ -72,7 +72,7 @@ export struct ProductMoreDetail {
           .layoutWeight(1)
 
           ProductUtilView({ isMoreDetail: $isMoreDetail, isShoppingBag: $isShoppingBag, isCustomerService:
-            $isCustomerService })
+            $isCustomerService, isShareSheetVisible: $isShareSheetVisible })
           // [EndExclude product_more_detail_view]
         }
         .height('100%')

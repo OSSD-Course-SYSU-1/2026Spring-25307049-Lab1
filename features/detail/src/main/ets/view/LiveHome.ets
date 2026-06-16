@@ -16,6 +16,7 @@
 import { display, window } from '@kit.ArkUI';
 import { Callback, deviceInfo, BusinessError } from '@kit.BasicServicesKit';
 import { BreakpointConstants, BreakpointType, CommonConstants, Logger, ResourceUtil } from '@ohos/commons';
+import { ContinuationManager } from '@ohos/commons';
 import { Live } from './Live';
 import { ShopBag } from './ShopBag';
 import { LiveConstants } from '../constants/LiveConstants';
@@ -36,6 +37,7 @@ export struct LiveHome {
   @State isShareSheetVisible: boolean = false;
   @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
+  private continuationManager: ContinuationManager = ContinuationManager.getInstance();
   private onFoldStatusChange: Callback<display.FoldStatus> = (data: display.FoldStatus) => {
     if (canIUse('SystemCapability.Window.SessionManager')) {
       if (data === display.FoldStatus.FOLD_STATUS_FOLDED &&
@@ -46,6 +48,9 @@ export struct LiveHome {
   };
 
   aboutToAppear(): void {
+    // Track live streaming state for continuation (自由流转)
+    this.continuationManager.updateState(
+      this.continuationManager.getCurrentTabIndex(), 'LiveHome', '', true);
     if (canIUse('SystemCapability.Window.SessionManager')) {
       try {
         display.on('foldStatusChange', this.onFoldStatusChange);
@@ -191,6 +196,7 @@ export struct LiveHome {
               isShoppingBag: $utilShoppingBag,
               isCustomerService:
               $utilCustomerService,
+              isShareSheetVisible: $isShareSheetVisible,
               isLivePage: true
             })
           }

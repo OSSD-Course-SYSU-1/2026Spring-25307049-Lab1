@@ -14,20 +14,22 @@
  */
 
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { DetailConstants } from '../constants/DetailConstants';
 import { CommentContentExtra, CommentsContent, CommentsTitle, ConfigTipIcon, ConfigTipText, ProductsConfigText,
   RightArrow, UserCommentInfo } from './CommonView';
 
 @Builder
-export function ProductConfig(pageBreakpoint: string, context: Context = this.getUIContext().getHostContext()!) {
+export function ProductConfig(pageBreakpoint: string, colorOptions: string[] = [], capacities: string[] = [],
+  context: Context = this.getUIContext().getHostContext()!) {
   Column() {
     Column() {
       Row() {
         ProductsConfigText(DetailConstants.PRODUCT_CONFIG_NAMES(context)[0], $r('app.float.products_config_margin_12'))
         Column() {
           Row() {
-            ProductsConfigText(DetailConstants.PRODUCT_CONFIG_NAMES(context)[1])
+            ProductsConfigText(colorOptions.length > 0 ? '已选：' + colorOptions[0] :
+              DetailConstants.PRODUCT_CONFIG_NAMES(context)[1])
             Blank()
             RightArrow()
           }
@@ -35,17 +37,42 @@ export function ProductConfig(pageBreakpoint: string, context: Context = this.ge
           .margin({ bottom: $r('app.float.products_config_margin_8') })
 
           List({ space: DetailConstants.PRODUCT_CONFIG_LIST_SPACE }) {
-            ForEach(DetailConstants.PRODUCT_COLOR_SELECTION, (item: Resource) => {
+            ForEach(DetailConstants.PRODUCT_COLOR_SELECTION, (item: Resource, index: number) => {
               ListItem() {
                 Image(item)
                   .width(ResourceUtil.getCommonImgSize()[2])
                   .height(ResourceUtil.getCommonImgSize()[2])
+                  .onClick(() => {
+                    let colorName = index < colorOptions.length ? colorOptions[index] : '颜色' + (index + 1);
+                    ToastUtil.show('已选择：' + colorName);
+                  })
               }
             }, (item: Resource, index: number) => JSON.stringify(item) + index)
           }
           .listDirection(Axis.Horizontal)
           .width(CommonConstants.FULL_PERCENT)
           .margin({ bottom: $r('app.float.products_config_margin_8') })
+
+          if (capacities.length > 0) {
+            Row() {
+              Text('容量选择：')
+                .fontSize($r('app.float.products_config_font'))
+                .fontWeight(FontWeight.Normal)
+                .opacity(CommonConstants.TEXT_OPACITY[2])
+              ForEach(capacities, (cap: string, idx: number) => {
+                Text(cap)
+                  .fontSize($r('app.float.products_config_font'))
+                  .fontWeight(FontWeight.Normal)
+                  .fontColor('#CF0A2C')
+                  .margin({ left: 8 })
+                  .onClick(() => {
+                    ToastUtil.show('已选择容量：' + cap);
+                  })
+              }, (cap: string, idx: number) => cap + idx)
+            }
+            .width(CommonConstants.FULL_PERCENT)
+            .margin({ bottom: $r('app.float.products_config_margin_8') })
+          }
 
           Divider()
             .width(CommonConstants.FULL_PERCENT)
@@ -74,6 +101,9 @@ export function ProductConfig(pageBreakpoint: string, context: Context = this.ge
                   Image(item)
                     .width(ResourceUtil.getCommonImgSize()[2])
                     .height(ResourceUtil.getCommonImgSize()[2])
+                    .onClick(() => {
+                      ToastUtil.show('已选择推荐配置（示意图）');
+                    })
                 }
               }, (item: Resource, index: number) => JSON.stringify(item) + index)
             }
@@ -161,10 +191,10 @@ export struct UserComments {
           .onClick(() => {
             if (this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG) {
               this.isShowingSidebar = true;
+            } else {
+              ToastUtil.show('查看全部评论');
             }
           })
-          .visibility(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.Visible :
-            Visibility.None)
         RightArrow(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.Visible :
           Visibility.None)
       }
@@ -266,4 +296,7 @@ function CommentsTag(tagText: string = '') {
   .borderRadius(ResourceUtil.getCommonBorderRadius()[6])
   .height($r('app.float.tag_row_height'))
   .backgroundColor($r('app.color.user_comments_tag_background'))
+  .onClick(() => {
+    ToastUtil.show('筛选：' + tagText);
+  })
 }

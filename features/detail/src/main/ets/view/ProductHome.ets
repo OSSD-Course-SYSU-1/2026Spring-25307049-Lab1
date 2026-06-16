@@ -16,6 +16,7 @@
 import { deviceInfo } from '@kit.BasicServicesKit';
 import { AbilityConstant, common, StartOptions, Want } from '@kit.AbilityKit';
 import { BreakpointConstants, CommonConstants, PipWindowUtil, ResourceUtil, ShareSheet } from '@ohos/commons';
+import { ContinuationManager, ProductRepository, ProductModel, CURRENT_PRODUCT_ID_KEY } from '@ohos/commons';
 import { ProductInfo, ProductPicture } from './ProductDetail';
 import { ProductUtilView } from './ProductUtilView';
 import { DetailTopIcon } from './CommonView';
@@ -37,9 +38,27 @@ export struct ProductHome {
   @State isLiveMoreDetail: boolean = false;
   @State isShareSheetVisible: boolean = false;
   @State sharePayload: string = '';
+  @State currentProduct: ProductModel | null = null;
   @Consume('pageInfos') pageInfos: NavPathStack;
   private pipWindowUtil: PipWindowUtil | undefined = PipWindowUtil.getPipWindowUtil(this.getUIContext());
   public is2in1: boolean = deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0];
+  private continuationManager: ContinuationManager = ContinuationManager.getInstance();
+
+  aboutToAppear(): void {
+    // Load product from AppStorage or use default
+    let storedId = AppStorage.get<string>(CURRENT_PRODUCT_ID_KEY);
+    if (storedId && storedId.length > 0) {
+      this.currentProduct = ProductRepository.getInstance().getProductById(storedId);
+    }
+    if (!this.currentProduct) {
+      this.currentProduct = ProductRepository.getInstance().getDefaultProduct();
+    }
+    this.sharePayload = DetailShareHelper.buildProductPayload(this.currentProduct.id);
+
+    // Track product detail page for continuation (自由流转)
+    this.continuationManager.updateState(this.continuationManager.getCurrentTabIndex(),
+      'ProductHome', this.currentProduct.id);
+  }
 
   aboutToDisappear(): void {
     if (deviceInfo.deviceType !== CommonConstants.DEVICE_TYPES[0]) {
@@ -95,7 +114,7 @@ export struct ProductHome {
               .layoutWeight(1)
 
               ProductUtilView({ isMoreDetail: $isMoreDetail, isShoppingBag: $isShoppingBag, isCustomerService:
-                $isCustomerService })
+                $isCustomerService, isShareSheetVisible: $isShareSheetVisible })
             }
             .padding({ top: deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? 0 : this.topRectHeight })
             .height(CommonConstants.FULL_PERCENT)
@@ -128,7 +147,9 @@ export struct ProductHome {
                     (this.getUIContext().getHostContext() as common.UIAbilityContext).terminateSelf();
                   }
                 })
-                DetailTopIcon($r('app.media.ic_more'))
+                DetailTopIcon($r('app.media.ic_more'), () => {
+                  this.isShareSheetVisible = true;
+                })
               }
               .padding({
                 left: ResourceUtil.getPageColPadding().getValue(this.currentBreakpoint),
@@ -149,7 +170,7 @@ export struct ProductHome {
               .layoutWeight(1)
 
               ProductUtilView({ isMoreDetail: $isMoreDetail, isShoppingBag: $isShoppingBag, isCustomerService:
-                $isCustomerService })
+                $isCustomerService, isShareSheetVisible: $isShareSheetVisible })
             }
             .padding({ top: deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? 0 : this.topRectHeight })
             .backgroundColor($r('app.color.products_info'))
@@ -182,7 +203,7 @@ export struct ProductHome {
           ShareSheet({
             isVisible: $isShareSheetVisible,
             payloadType: 'product',
-            payloadJson: DetailShareHelper.buildProductPayload()
+            payloadJson: this.sharePayload
           })
         }
       }

@@ -1,5 +1,6 @@
 import { DeviceInfo } from '../DeviceInfo';
 import { TransferState } from '../TransferState';
+import { ShareConstants } from '../constants/ShareConstants';
 import { ShareSessionManager, SessionStateCallback, SessionStateData } from '../manager/ShareSessionManager';
 
 /**
@@ -23,9 +24,11 @@ export struct ShareSheet {
   private radarTimer: number = -1;
 
   aboutToAppear(): void {
-    animateTo({ duration: 300, curve: Curve.EaseOut }, () => {
+    this.getUIContext().animateTo({ duration: 300, curve: Curve.EaseOut }, () => {
       this.sheetTranslateY = 0;
     });
+    // Initialize distributed service context for real device discovery
+    this.sessionManager.setContext(this.getUIContext().getHostContext()!);
     this.startDiscovery();
     this.startRadarAnimation();
   }
@@ -62,7 +65,7 @@ export struct ShareSheet {
     this.transferState = TransferState.DISCOVERING;
     this.transferProgress = 0;
     this.statusText = '正在搜索附近设备...';
-    this.isSimulatedMode = true;
+    this.isSimulatedMode = this.sessionManager.isSimulatedMode();
 
     const callback: SessionStateCallback = (state: TransferState, data?: SessionStateData): void => {
       this.transferState = state;
@@ -92,6 +95,7 @@ export struct ShareSheet {
 
   retry(): void {
     this.sessionManager.retry();
+    this.updateStatusText();
   }
 
   updateStatusText(): void {
@@ -108,9 +112,11 @@ export struct ShareSheet {
       case TransferState.DONE:
         this.statusText = '发送成功';
         break;
-      case TransferState.ERROR:
-        this.statusText = '发送失败，请重试';
+      case TransferState.ERROR: {
+        const remaining = ShareConstants.MAX_RETRY_COUNT - this.sessionManager.getRetryCount();
+        this.statusText = remaining > 0 ? `发送失败，可重试 (${remaining}次)` : '发送失败，已达最大重试次数';
         break;
+      }
       default:
         this.statusText = '';
     }
@@ -121,7 +127,7 @@ export struct ShareSheet {
       return;
     }
     this.stopRadarAnimation();
-    animateTo({ duration: 250, curve: Curve.EaseIn }, () => {
+    this.getUIContext().animateTo({ duration: 250, curve: Curve.EaseIn }, () => {
       this.sheetTranslateY = 100;
     });
     setTimeout(() => {
@@ -244,17 +250,25 @@ export struct ShareSheet {
           ForEach(this.deviceList, (device: DeviceInfo) => {
             ListItem() {
               Row() {
-                Text(device.deviceType === 'tablet' ? '📱' : '📱')
+                Text(device.deviceType === 'tablet' ? '📋' :
+                  (device.deviceType === '2in1' ? '💻' : '📱'))
                   .fontSize(28)
                 Column() {
                   Text(device.deviceName)
                     .fontSize(15).fontWeight(FontWeight.Medium).fontColor('#333333')
-                  Text(device.isSimulated ? '模拟设备' : 'HarmonyOS 设备')
-                    .fontSize(11).fontColor('#999999').margin({ top: 2 })
+                  Text(device.isSimulated ? '模拟设备' : 'HarmonyOS 设备 · 在线')
+                    .fontSize(11)
+                    .fontColor(device.isSimulated ? '#999999' : '#4CAF50')
+                    .margin({ top: 2 })
                 }
                 .alignItems(HorizontalAlign.Start)
                 .margin({ left: 12 })
                 .layoutWeight(1)
+                if (!device.isSimulated) {
+                  Text('⚡')
+                    .fontSize(14)
+                    .margin({ right: 4 })
+                }
                 Text('›')
                   .fontSize(22)
                   .fontColor('#CCCCCC')

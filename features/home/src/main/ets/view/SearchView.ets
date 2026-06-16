@@ -1,7 +1,8 @@
 /**
  * Product search view with real-time filtering and search history.
  */
-import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, CURRENT_PRODUCT_ID_KEY, resolveProductId, ResourceUtil, ToastUtil, ContinuationManager } from '@ohos/commons';
+import { ClassifyConstants } from '../constants/ClassifyConstants';
 
 @Component
 export struct SearchView {
@@ -11,6 +12,7 @@ export struct SearchView {
   @State searchHistory: string[] = [];
   @State searchResults: SearchResultItem[] = [];
   @State showHistory: boolean = true;
+  private continuationManager: ContinuationManager = ContinuationManager.getInstance();
 
   private allProducts: SearchResultItem[] = [
     new SearchResultItem('HUAWEI Mate 60 Pro', '￥6999', '手机', $r('app.media.flash_sale_product_1')),
@@ -28,9 +30,21 @@ export struct SearchView {
   ];
 
   aboutToAppear(): void {
+    // Track search page for continuation (自由流转)
+    this.continuationManager.updateState(
+      this.continuationManager.getCurrentTabIndex(), 'SearchView');
     let history = AppStorage.get<string[]>('searchHistory');
     if (history) {
       this.searchHistory = history;
+    }
+
+    // Restore search keyword from continuation (自由流转)
+    let continuationKeyword = AppStorage.get<string>('continuationSearchKeyword');
+    if (continuationKeyword && continuationKeyword.length > 0) {
+      this.searchText = continuationKeyword;
+      this.onSearch(continuationKeyword);
+      // Clear the signal after consuming
+      AppStorage.setOrCreate('continuationSearchKeyword', '');
     }
   }
 
@@ -65,6 +79,9 @@ export struct SearchView {
     }
     this.showHistory = false;
     this.saveSearchHistory(keyword);
+    // Track search keyword for continuation (自由流转)
+    this.continuationManager.updateState(
+      this.continuationManager.getCurrentTabIndex(), 'SearchView', '', false, keyword);
     let lowerKeyword = keyword.toLowerCase();
     let results: SearchResultItem[] = [];
     for (let i = 0; i < this.allProducts.length; i++) {
@@ -242,6 +259,11 @@ export struct SearchView {
                 }
                 .width(CommonConstants.FULL_PERCENT)
                 .padding({ left: 16, right: 16, top: 10, bottom: 10 })
+                .onClick(() => {
+                  ToastUtil.show('查看「' + item.name + '」详情');
+                  AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, resolveProductId(item.name));
+                  this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
+                })
               }
             }, (item: SearchResultItem) => item.name)
           }

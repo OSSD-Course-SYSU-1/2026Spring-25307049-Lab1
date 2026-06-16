@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, BreakpointType, CommonConstants, Logger, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, CURRENT_PRODUCT_ID_KEY, Logger, resolveProductId, ResourceUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { RecommendedProductViewModel, RecommendedProduct } from '../viewmodel/RecommendedProductViewModel';
 import { ClassifyConstants } from '../constants/ClassifyConstants';
@@ -27,7 +27,7 @@ export struct RecommendedProductView {
 
   build() {
     Swiper() {
-      ForEach(this.getRecommendedProducts(this.recommendedProducts), (item: RecommendedProduct) => {
+      ForEach(this.getRecommendedProducts(this.recommendedProducts), (item: RecommendedProduct, index: number) => {
         Stack() {
           Image(item.getImage())
             .width(CommonConstants.FULL_PERCENT)
@@ -48,6 +48,9 @@ export struct RecommendedProductView {
         .width(this.getSwiperWidth(this.currentBreakpoint, this.windowWidth))
         .height(this.getSwiperWidth(this.currentBreakpoint, this.windowWidth))
         .onClick(() => {
+          let ids: string[] = ['mate_60_pro', 'mate_x5', 'p60_pro', 'mate_50'];
+          let productId = index < ids.length ? ids[index] : 'mate_x5';
+          AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, productId);
           this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
         })
       }, (item: Resource, index: number) => JSON.stringify(item) + index)

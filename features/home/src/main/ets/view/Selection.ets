@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, BreakpointType, CommonConstants, Logger, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, CURRENT_PRODUCT_ID_KEY, Logger, resolveProductId, ResourceUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { SectionProduct, SectionProductsViewModel } from '../viewmodel/SectionProductsViewModel';
 import { ProductComments, ProductFeature, ProductInfo, ProductPrice, ProductTitle, TitleView } from './CommonView';
@@ -80,6 +80,8 @@ export struct Selection {
             }
             .width(CommonConstants.FULL_PERCENT)
             .onClick(() => {
+              let productName = item.getTitle().length > 0 ? item.getTitle()[0] : '';
+              AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, resolveProductId(productName, index));
               this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
             })
           }

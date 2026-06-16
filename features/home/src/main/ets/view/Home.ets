@@ -15,6 +15,7 @@
 
 import { deviceInfo } from '@kit.BasicServicesKit';
 import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { ContinuationManager } from '@ohos/commons';
 import { FooterTab, FooterTabViewModel } from '../viewmodel/FooterTabViewModel';
 import { HomeContent } from './HomeContent';
 import { ClassifyContent } from './ClassifyContent';
@@ -27,8 +28,22 @@ export struct Home {
   @State currentBottomIndex: number = 0;
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @StorageLink('continuationTabIndex') continuationTabIndex: number = -1;
   private context: Context = this.getUIContext().getHostContext()!
   private tabList: FooterTab[] = new FooterTabViewModel(this.context).getTabList();
+  private continuationManager: ContinuationManager = ContinuationManager.getInstance();
+
+  aboutToAppear(): void {
+    // Handle continuation (自由流转) tab restore
+    if (this.continuationTabIndex >= 0) {
+      this.currentBottomIndex = this.continuationTabIndex;
+      // Clear the signal after consuming it
+      AppStorage.setOrCreate('continuationTabIndex', -1);
+    }
+
+    // Initialize continuation state tracking
+    this.continuationManager.updateState(this.currentBottomIndex);
+  }
 
   @Builder
   BottomTabBuilder(item: FooterTab, index: number) {
@@ -92,6 +107,8 @@ export struct Home {
       .vertical(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG)
       .onChange((index: number) => {
         this.currentBottomIndex = index;
+        // Update continuation state whenever the user switches tabs
+        this.continuationManager.updateState(index);
       })
       .scrollable(false)
     }

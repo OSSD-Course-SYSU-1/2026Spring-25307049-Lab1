@@ -13,13 +13,16 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { DetailConstants } from '../constants/DetailConstants';
 import { RightArrow } from './CommonView';
 
 @Component
 export struct ProductPrice {
   @Prop pageBreakpoint: string;
+  @Prop price: string = '¥12999';
+  @Prop originalPrice: string = '¥13999';
+  @Prop storeName: string = '华为官方旗舰店';
   private context: Context = this.getUIContext().getHostContext()!
   aboutToAppear(): void {
 
@@ -27,19 +30,19 @@ export struct ProductPrice {
   build() {
     Column() {
       Row() {
-        Text(DetailConstants.PRODUCT_PRICE_NAMES(this.context)[0])
+        Text('¥')
           .fontSize($r('app.float.product_price_font_1'))
           .lineHeight($r('app.float.product_price_line_1'))
           .fontWeight(CommonConstants.FONT_WEIGHT_500)
           .fontColor(Color.White)
           .displayPriority(4)
-        Text(DetailConstants.PRODUCT_PRICE_NAMES(this.context)[1])
+        Text(this.price)
           .fontSize($r('app.float.product_price_font_2'))
           .lineHeight($r('app.float.product_price_line_2'))
           .fontWeight(CommonConstants.FONT_WEIGHT_500)
           .fontColor(Color.White)
           .displayPriority(4)
-        Text(DetailConstants.PRODUCT_PRICE_NAMES(this.context)[2])
+        Text(this.originalPrice)
           .decoration({
             type: TextDecorationType.LineThrough,
             color: Color.White
@@ -78,7 +81,7 @@ export struct ProductPrice {
       })
 
       Row() {
-        Text(DetailConstants.PRODUCT_PRICE_NAMES(this.context)[9])
+        Text(DetailConstants.PRODUCT_PRICE_NAMES(this.context)[9] + ' · ' + this.storeName)
           .fontSize($r('app.float.product_price_font_3'))
           .fontWeight(FontWeight.Normal)
           .lineHeight($r('app.float.product_price_line_3'))
@@ -90,6 +93,9 @@ export struct ProductPrice {
       .margin({
         top: $r('app.float.price_margin_top'),
         bottom: $r('app.float.price_margin_bottom')
+      })
+      .onClick(() => {
+        ToastUtil.show(this.storeName + ' · 支持7天无理由退货，15天内换货');
       })
 
       Row() {
@@ -111,6 +117,9 @@ export struct ProductPrice {
         .height($r('app.float.price_tag_row_height'))
         .backgroundColor($r('app.color.products_info_background_2'))
         .justifyContent(FlexAlign.Center)
+        .onClick(() => {
+          ToastUtil.show('已选：幻影紫 12GB+512GB 官方标配');
+        })
       }
       .width(CommonConstants.FULL_PERCENT)
       .margin({ bottom: $r('app.float.price_tag_row_margin') })
@@ -144,6 +153,9 @@ export struct ProductPrice {
       .alignItems(VerticalAlign.Top)
       .width(CommonConstants.FULL_PERCENT)
       .height($r('app.float.price_position_row_height'))
+      .onClick(() => {
+        ToastUtil.show('选择配送地址');
+      })
     }
     .alignItems(HorizontalAlign.Start)
     .backgroundColor(Color.White)
@@ -211,6 +223,9 @@ export struct ProductPrice {
       direction: GradientDirection.Right,
       repeating: false,
       colors: [[DetailConstants.GRADIENT_COLORS[2], 0.0], [DetailConstants.GRADIENT_COLORS[3], 1.0]]
+    })
+    .onClick(() => {
+      ToastUtil.show('标签详情：' + tagText);
     })
   }
 }

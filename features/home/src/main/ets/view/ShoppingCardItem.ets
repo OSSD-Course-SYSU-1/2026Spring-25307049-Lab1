@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { ShoppingBagConstants } from '../constants/ShoppingBagConstants';
 import { ShoppingBagListViewModel, ShoppingBagProduct } from '../viewmodel/ShoppingBagListViewModel';
 
@@ -66,6 +66,9 @@ export function ShoppingCardItem(shoppingBagProductItem: ShoppingBagProduct = ne
           })
           .margin({
             bottom: $r('app.float.card_type_margin_row_bottom')
+          })
+          .onClick(() => {
+            ToastUtil.show('已选：' + shoppingBagProductItem.getType());
           })
 
           Row() {
@@ -126,7 +129,9 @@ export function ShoppingCardItem(shoppingBagProductItem: ShoppingBagProduct = ne
             }
             Blank()
             Row() {
-              AddButton(ShoppingBagConstants.SHOPPING_CARD_NAMES(context)[1])
+              AddButton(ShoppingBagConstants.SHOPPING_CARD_NAMES(context)[1], () => {
+                ToastUtil.show('数量已减少');
+              })
               Text(ShoppingBagConstants.SHOPPING_CARD_NAMES(context)[2])
                 .fontSize($r('app.float.card_number_font'))
                 .width($r('app.float.card_number_width'))
@@ -135,7 +140,9 @@ export function ShoppingCardItem(shoppingBagProductItem: ShoppingBagProduct = ne
                   right: $r('app.float.card_number_margin')
                 })
                 .textAlign(TextAlign.Center)
-              AddButton(ShoppingBagConstants.SHOPPING_CARD_NAMES(context)[3])
+              AddButton(ShoppingBagConstants.SHOPPING_CARD_NAMES(context)[3], () => {
+                ToastUtil.show('数量已增加');
+              })
             }
           }
           .width(CommonConstants.FULL_PERCENT)
@@ -172,6 +179,9 @@ export function ShoppingCardItem(shoppingBagProductItem: ShoppingBagProduct = ne
           top: $r('app.float.card_gift_row_margin_top'),
           bottom: $r('app.float.card_gift_row_margin_bottom')
         })
+        .onClick(() => {
+          ToastUtil.show('赠品：' + shoppingBagProductItem.getPresent());
+        })
 
         Row() {
           Text(ShoppingBagConstants.SHOPPING_CARD_NAMES(context)[5])
@@ -194,6 +204,9 @@ export function ShoppingCardItem(shoppingBagProductItem: ShoppingBagProduct = ne
             .height(ResourceUtil.getCommonImgSize()[9])
         }
         .width(CommonConstants.FULL_PERCENT)
+        .onClick(() => {
+          ToastUtil.show('服务保障：' + shoppingBagProductItem.getService());
+        })
       }
       .width(CommonConstants.FULL_PERCENT)
       .padding({
@@ -207,7 +220,7 @@ export function ShoppingCardItem(shoppingBagProductItem: ShoppingBagProduct = ne
 
 }
 @Builder
-function AddButton(buttonText: string) {
+function AddButton(buttonText: string, onClick?: () => void) {
   Text(buttonText)
     .width($r('app.float.add_button_size'))
     .height($r('app.float.add_button_size'))
@@ -218,4 +231,9 @@ function AddButton(buttonText: string) {
     })
     .fontColor($r('app.color.add_button_border'))
     .textAlign(TextAlign.Center)
+    .onClick(() => {
+      if (onClick) {
+        onClick();
+      }
+    })
 }

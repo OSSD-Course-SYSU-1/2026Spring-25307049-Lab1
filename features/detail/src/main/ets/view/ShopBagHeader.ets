@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, CommonConstants } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ToastUtil } from '@ohos/commons';
 import { ShopCarIcon, ShopCarModel } from '../viewmodel/ShopCarViewModel';
 
 @Component
@@ -28,9 +28,12 @@ export struct ShopBagHeader {
         .fontSize($r('app.float.bag_name_font_size'))
         .lineHeight($r('app.float.bag_name_line_height'))
       Blank()
-      ShopBagIconView({ iconResource: this.shopCarIcons[0].getIcon(), iconName: this.shopCarIcons[0].getName() })
-      ShopBagIconView({ iconResource: this.shopCarIcons[1].getIcon(), iconName: this.shopCarIcons[1].getName() })
-      ShopBagIconView({ iconResource: this.shopCarIcons[2].getIcon(), iconName: this.shopCarIcons[2].getName() })
+      ShopBagIconView({ iconResource: this.shopCarIcons[0].getIcon(), iconName: this.shopCarIcons[0].getName(),
+        onItemClick: () => { ToastUtil.showFeaturePending('客服'); } })
+      ShopBagIconView({ iconResource: this.shopCarIcons[1].getIcon(), iconName: this.shopCarIcons[1].getName(),
+        onItemClick: () => { ToastUtil.show('进入直播购物'); } })
+      ShopBagIconView({ iconResource: this.shopCarIcons[2].getIcon(), iconName: this.shopCarIcons[2].getName(),
+        onItemClick: () => { ToastUtil.showFeaturePending('购物车管理'); } })
 
       Image($r('app.media.icon_close_2'))
         .width($r('app.float.bag_close_icon_size'))
@@ -50,6 +53,7 @@ struct ShopBagIconView {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   public iconResource: Resource = $r('app.media.icon_bag');
   public iconName: string = '';
+  onItemClick?: () => void;
 
   build() {
     Column() {
@@ -69,6 +73,11 @@ struct ShopBagIconView {
     .margin({
       right: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ?
       $r('app.float.bag_icon_margin_lg') : $r('app.float.bag_icon_margin_md_sm')
+    })
+    .onClick(() => {
+      if (this.onItemClick) {
+        this.onItemClick();
+      }
     })
   }
 }

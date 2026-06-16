@@ -13,19 +13,19 @@
  * limitations under the License.
  */
 
-import { BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointType, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { DetailConstants } from '../constants/DetailConstants';
 import { RightArrow } from './CommonView';
 
 @Builder
-export function  ProductDiscount(pageBreakpoint: string, context: Context = this.getUIContext().getHostContext()!) {
+export function ProductDiscount(pageBreakpoint: string, description: string = '', context: Context = this.getUIContext().getHostContext()!) {
   Column() {
     Text(DetailConstants.PRODUCT_DISCOUNT_NAMES(context)[0])
       .fontSize($r('app.float.discount_text_font_1'))
       .lineHeight($r('app.float.discount_text_line'))
       .fontWeight(CommonConstants.FONT_WEIGHT_500)
       .margin({ bottom: $r('app.float.discount_text_margin_1') })
-    Text(DetailConstants.PRODUCT_DISCOUNT_NAMES(context)[1])
+    Text(description.length > 0 ? description : DetailConstants.PRODUCT_DISCOUNT_NAMES(context)[1])
       .fontSize($r('app.float.discount_text_font_2'))
       .fontColor($r('app.color.products_info_text'))
       .lineHeight($r('app.float.discount_text_line'))
@@ -46,6 +46,9 @@ export function  ProductDiscount(pageBreakpoint: string, context: Context = this
       Blank()
       RightArrow()
     }
+    .onClick(() => {
+      ToastUtil.show('优惠详情：限时直降1000元，赠原装保护壳');
+    })
     .padding({
       left: $r('app.float.discount_row_padding'),
       right: $r('app.float.discount_row_padding')

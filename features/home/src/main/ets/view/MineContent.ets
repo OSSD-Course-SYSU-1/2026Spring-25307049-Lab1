@@ -3,8 +3,9 @@
  * This replaces the previously empty "我的" tab.
  */
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, CommonConstants, ResourceUtil, ShareSheet } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, CURRENT_PRODUCT_ID_KEY, resolveProductId, ResourceUtil, ShareSheet, ToastUtil, ContinuationManager } from '@ohos/commons';
 import { MineShareHelper } from '../share/MineShareHelper';
+import { ClassifyConstants } from '../constants/ClassifyConstants';
 
 @Component
 export struct MineContent {
@@ -14,9 +15,14 @@ export struct MineContent {
   @State browsingHistory: BrowsingHistoryItem[] = [];
   @State activeTab: number = 0;
   @State isShareSheetVisible: boolean = false;
+  @Consume('pageInfos') pageInfos: NavPathStack;
+  private continuationManager: ContinuationManager = ContinuationManager.getInstance();
   private tabTitles: string[] = ['我的收藏', '浏览历史'];
 
   aboutToAppear(): void {
+    // Track MineContent page for continuation (自由流转)
+    this.continuationManager.updateState(
+      this.continuationManager.getCurrentTabIndex(), 'MineContent');
     let favs = AppStorage.get<FavoriteItem[]>('favorites');
     if (favs) {
       this.favorites = favs;
@@ -94,6 +100,9 @@ export struct MineContent {
         .fontColor('#CF0A2C')
         .border({ width: 1, color: '#CF0A2C', radius: 16 })
         .padding({ left: 12, right: 12, top: 4, bottom: 4 })
+        .onClick(() => {
+          ToastUtil.showFeaturePending('编辑资料');
+        })
     }
     .width(CommonConstants.FULL_PERCENT)
     .padding({ left: 16, right: 16, top: 16 })
@@ -112,6 +121,10 @@ export struct MineContent {
           .margin({ top: 4 })
       }
       .layoutWeight(1)
+      .onClick(() => {
+        this.activeTab = 0;
+        ToastUtil.show('已切换到收藏夹');
+      })
 
       Column() {
         Text(this.browsingHistory.length.toString())
@@ -123,6 +136,10 @@ export struct MineContent {
           .margin({ top: 4 })
       }
       .layoutWeight(1)
+      .onClick(() => {
+        this.activeTab = 1;
+        ToastUtil.show('已切换到浏览历史');
+      })
 
       Column() {
         Text('0')
@@ -134,6 +151,9 @@ export struct MineContent {
           .margin({ top: 4 })
       }
       .layoutWeight(1)
+      .onClick(() => {
+        ToastUtil.showFeaturePending('我的订单');
+      })
 
       Column() {
         Text('0')
@@ -145,6 +165,9 @@ export struct MineContent {
           .margin({ top: 4 })
       }
       .layoutWeight(1)
+      .onClick(() => {
+        ToastUtil.showFeaturePending('优惠券');
+      })
     }
     .width(CommonConstants.FULL_PERCENT)
     .backgroundColor(Color.White)
@@ -274,6 +297,11 @@ export struct MineContent {
                   this.removeFavorite(item);
                 })
             }
+            .onClick(() => {
+              ToastUtil.show('查看「' + item.name + '」详情');
+              AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, resolveProductId(item.name));
+              this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
+            })
             .width(CommonConstants.FULL_PERCENT)
             .padding({ left: 16, right: 16, top: 12, bottom: 12 })
           }
@@ -352,6 +380,11 @@ export struct MineContent {
               }
               .width(CommonConstants.FULL_PERCENT)
               .padding({ left: 16, right: 16, top: 10, bottom: 10 })
+              .onClick(() => {
+                ToastUtil.show('查看「' + item.name + '」详情');
+                AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, resolveProductId(item.name));
+                this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
+              })
             }
           }, (item: BrowsingHistoryItem) => item.name + item.viewTime)
         }
@@ -390,11 +423,26 @@ export struct MineContent {
 
             // Menu entries
             Column() {
-              this.MenuEntry($r('app.media.icon_order'), '我的订单')
+              Row() {
+                this.MenuEntry($r('app.media.icon_order'), '我的订单')
+              }
+              .onClick(() => {
+                ToastUtil.showFeaturePending('我的订单');
+              })
               Divider().color('#F1F3F5').margin({ left: 16 })
-              this.MenuEntry($r('app.media.icon_pay'), '收货地址')
+              Row() {
+                this.MenuEntry($r('app.media.icon_pay'), '收货地址')
+              }
+              .onClick(() => {
+                ToastUtil.show('收货地址管理开发中，敬请期待');
+              })
               Divider().color('#F1F3F5').margin({ left: 16 })
-              this.MenuEntry($r('app.media.icon_order'), '优惠券')
+              Row() {
+                this.MenuEntry($r('app.media.icon_order'), '优惠券')
+              }
+              .onClick(() => {
+                ToastUtil.show('暂无可用优惠券');
+              })
             }
             .backgroundColor(Color.White)
             .borderRadius(12)

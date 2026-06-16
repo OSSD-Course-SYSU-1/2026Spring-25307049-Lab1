@@ -14,7 +14,7 @@
  */
 
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { ClassifyConstants } from '../constants/ClassifyConstants';
 
@@ -22,6 +22,7 @@ import { ClassifyConstants } from '../constants/ClassifyConstants';
 export struct HomeHeader {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @StorageLink('topRectHeight') topRectHeight: number = 0;
+  @State selectedTabIndex: number = 0;
   @Consume('pageInfos') pageInfos: NavPathStack;
   private context: Context = this.getUIContext().getHostContext()!
 
@@ -75,12 +76,16 @@ export struct HomeHeader {
       ForEach(HomeConstants.TOP_BAR_TEXTS(this.context), (item: string, index: number) => {
         ListItem() {
           Text(item)
-            .fontSize(index === 0 ? $r('app.float.top_bar_text_selected_font') : $r('app.float.top_bar_text_font'))
-            .lineHeight(index === 0 ? $r('app.float.top_bar_text_selected_line') : $r('app.float.top_bar_text_line'))
-            .fontWeight(index === 0 ? CommonConstants.FONT_WEIGHT_500 : FontWeight.Normal)
-            .fontColor(index === 0 ? Color.Black : $r('app.color.home_header_text_color'))
+            .fontSize(index === this.selectedTabIndex ? $r('app.float.top_bar_text_selected_font') : $r('app.float.top_bar_text_font'))
+            .lineHeight(index === this.selectedTabIndex ? $r('app.float.top_bar_text_selected_line') : $r('app.float.top_bar_text_line'))
+            .fontWeight(index === this.selectedTabIndex ? CommonConstants.FONT_WEIGHT_500 : FontWeight.Normal)
+            .fontColor(index === this.selectedTabIndex ? Color.Black : $r('app.color.home_header_text_color'))
         }
         .layoutWeight(1)
+        .onClick(() => {
+          this.selectedTabIndex = index;
+          ToastUtil.show('切换到「' + item + '」');
+        })
       }, (item: string, index: number) => item + index)
     }
     .scrollBar(BarState.Off)
@@ -132,6 +137,9 @@ export struct HomeHeader {
         .height(ResourceUtil.getCommonImgSize()[0])
         .margin({ left: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_SM ?
           $r('app.float.search_img_margin_sm') : $r('app.float.search_img_margin') })
+        .onClick(() => {
+          ToastUtil.showFeaturePending('扫码');
+        })
 
       // Message image.
       Image($r('app.media.ic_public_comments'))
@@ -139,6 +147,9 @@ export struct HomeHeader {
         .height(ResourceUtil.getCommonImgSize()[0])
         .margin({ left: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_SM ?
           $r('app.float.search_img_margin_sm') : $r('app.float.search_img_margin') })
+        .onClick(() => {
+          ToastUtil.showFeaturePending('消息中心');
+        })
     }
     .justifyContent(FlexAlign.Center)
     .width(CommonConstants.FULL_PERCENT)

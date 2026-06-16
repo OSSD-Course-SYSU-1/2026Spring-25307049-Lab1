@@ -16,7 +16,7 @@
 import { BusinessError, deviceInfo } from '@kit.BasicServicesKit';
 import { AbilityConstant, common, StartOptions, Want } from '@kit.AbilityKit';
 import { ClassifyConstants } from '@ohos/home';
-import { BreakpointConstants, BreakpointType, CommonConstants, Logger, PipWindowUtil, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, CURRENT_PRODUCT_ID_KEY, Logger, PipWindowUtil, ProductModel, ProductRepository, ResourceUtil } from '@ohos/commons';
 import { DetailConstants } from '../constants/DetailConstants';
 import { ProductPrice } from './ProductPrice';
 import { ProductDiscount } from './ProductDiscount';
@@ -113,8 +113,7 @@ export struct ProductPicture {
             .height(ResourceUtil.getCommonImgSize()[1])
             .width(ResourceUtil.getCommonImgSize()[1])
             .margin({ right: $r('app.float.picture_icon_margin') })
-            .visibility(this.pageBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.None :
-              Visibility.Visible)
+            .visibility(Visibility.Visible)
             .onClick(() => {
               this.isShareSheetVisible = true;
             })
@@ -123,6 +122,9 @@ export struct ProductPicture {
             .width(ResourceUtil.getCommonImgSize()[1])
             .visibility(this.pageBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.None :
               Visibility.Visible)
+            .onClick(() => {
+              this.isShareSheetVisible = true;
+            })
         }
         .width(CommonConstants.FULL_PERCENT)
         .position({ x: 0, y: DetailConstants.LIVE_ROW_Y_POSITION })
@@ -231,6 +233,9 @@ export struct ProductPicture {
                   ResourceUtil.getCommonImgSize()[2])
                 .borderRadius(ResourceUtil.getCommonBorderRadius()[3])
                 .borderWidth(index === this.currentSwiperIndex ? 1 : 0)
+                .onClick(() => {
+                  this.currentSwiperIndex = index;
+                })
             }
           }, (item: Resource, index: number) => JSON.stringify(item) + index)
         }
@@ -261,13 +266,22 @@ export struct ProductPicture {
 export struct ProductInfo {
   @StorageLink('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @Prop pageBreakpoint: string;
+  @StorageLink(CURRENT_PRODUCT_ID_KEY) currentProductId: string = 'mate_x5';
+  @State private product: ProductModel = ProductRepository.getInstance().getDefaultProduct();
+  private productRepo: ProductRepository = ProductRepository.getInstance();
+
+  aboutToAppear(): void {
+    this.product = this.productRepo.getProductById(this.currentProductId) ??
+      this.productRepo.getDefaultProduct();
+  }
 
   build() {
     Column() {
-      ProductPrice({ pageBreakpoint: this.pageBreakpoint })
-      ProductDiscount(this.pageBreakpoint)
-      ProductConfig(this.pageBreakpoint)
-      PriceComparison({ pageBreakpoint: this.pageBreakpoint })
+      ProductPrice({ pageBreakpoint: this.pageBreakpoint, price: this.product.price,
+        originalPrice: this.product.originalPrice, storeName: this.product.storeName })
+      ProductDiscount(this.pageBreakpoint, this.product.description)
+      ProductConfig(this.pageBreakpoint, this.product.colorOptions, this.product.capacities)
+      PriceComparison({ pageBreakpoint: this.pageBreakpoint, platformPrices: this.product.platformPrices })
       UserComments()
     }
     .backgroundColor($r('app.color.products_info'))

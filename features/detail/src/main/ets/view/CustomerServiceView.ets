@@ -14,7 +14,7 @@
  */
 
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { DetailConstants } from '../constants/DetailConstants';
 
 @Component
@@ -122,6 +122,9 @@ export struct CustomerServiceView {
                   .borderRadius(ResourceUtil.getCommonBorderRadius()[5])
                   .backgroundColor($r('app.color.service_font_color'))
                   .displayPriority(3)
+                  .onClick(() => {
+                    ToastUtil.show('已加入购物车');
+                  })
               }
               .width(CommonConstants.FULL_PERCENT)
               .height($r('app.float.service_card_price_height'))
@@ -167,7 +170,9 @@ export struct CustomerServiceView {
 
       Row() {
         Column(){
-          NormalImage($r('app.media.ic_public_voice'))
+          NormalImage($r('app.media.ic_public_voice'), () => {
+            ToastUtil.showFeaturePending('语音输入');
+          })
         }
         .margin({ right: new BreakpointType($r('app.float.service_util_right_margin_sm'),
             $r('app.float.service_util_right_margin_md'), $r('app.float.service_util_right_margin_lg'))
@@ -179,12 +184,16 @@ export struct CustomerServiceView {
             $r('app.float.service_util_right_margin_md'), $r('app.float.service_util_right_margin_lg'))
             .getValue(this.currentBreakpoint) })
         Column(){
-          NormalImage($r('app.media.ic_public_emoji'))
+          NormalImage($r('app.media.ic_public_emoji'), () => {
+            ToastUtil.showFeaturePending('表情');
+          })
         }
         .margin({ right: new BreakpointType($r('app.float.service_util_right_margin_sm'),
             $r('app.float.service_util_right_margin_md'), $r('app.float.service_util_right_margin_lg'))
             .getValue(this.currentBreakpoint) })
-        NormalImage($r('app.media.ic_public_add'))
+        NormalImage($r('app.media.ic_public_add'), () => {
+          ToastUtil.showFeaturePending('附件');
+        })
       }
       .height(deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? CommonConstants.TAB_BAR_HEIGHT :
         CommonConstants.TAB_BAR_HEIGHT + CommonConstants.BOTTOM_RECT_HEIGHT)

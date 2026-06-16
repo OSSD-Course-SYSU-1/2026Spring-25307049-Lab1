@@ -13,11 +13,11 @@
  * limitations under the License.
  */
 
-import { CommonConstants, ResourceUtil } from '@ohos/commons';
+import { CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 
 @Builder
-export function HomeButton(buttonText: string = '') {
+export function HomeButton(buttonText: string = '', onClick?: () => void) {
   Button(buttonText)
     .backgroundColor($r('app.color.button_color'))
     .borderRadius(ResourceUtil.getCommonBorderRadius()[5])
@@ -26,6 +26,11 @@ export function HomeButton(buttonText: string = '') {
     .fontColor(Color.White)
     .fontSize($r('app.float.button_font'))
     .fontWeight(CommonConstants.FONT_WEIGHT_500)
+    .onClick(() => {
+      if (onClick) {
+        onClick();
+      }
+    })
 }
 
 @Builder
@@ -52,6 +57,9 @@ export function TitleView(titleText: string = '', context: Context = this.getUIC
   .padding({
     left: $r('app.float.title_view_padding'),
     right: $r('app.float.title_view_padding')
+  })
+  .onClick(() => {
+    ToastUtil.show('查看更多：' + titleText);
   })
 }
 

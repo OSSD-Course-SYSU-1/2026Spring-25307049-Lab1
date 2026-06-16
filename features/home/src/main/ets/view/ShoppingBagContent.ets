@@ -1,4 +1,4 @@
-import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { deviceInfo } from '@kit.BasicServicesKit';
 import { ShoppingCardFoot } from './ShoppingCardFoot';
 import { ShoppingBagDiscounts } from './ShoppingBagDiscounts';
@@ -103,7 +103,11 @@ struct ShoppingBagView {
 
       ShoppingCardFoot({
         selectedCount: this.getSelectedCount(),
-        totalPrice: this.getTotalPrice()
+        totalPrice: this.getTotalPrice(),
+        onToggleAll: () => { this.toggleAll(); },
+        onSettlement: () => {
+          ToastUtil.show('确认结算 ' + this.getSelectedCount().toString() + ' 件商品，合计￥' + this.getTotalPrice().toString());
+        }
       })
         .visibility(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ? Visibility.None : Visibility.Visible)
     }
@@ -223,7 +227,11 @@ export struct DetailShoppingBagView {
 
       ShoppingCardFoot({
         selectedCount: this.getSelectedCount(),
-        totalPrice: this.getTotalPrice()
+        totalPrice: this.getTotalPrice(),
+        onToggleAll: () => { this.toggleAll(); },
+        onSettlement: () => {
+          ToastUtil.show('确认结算 ' + this.getSelectedCount().toString() + ' 件商品，合计￥' + this.getTotalPrice().toString());
+        }
       })
         .margin({ bottom: deviceInfo.deviceType !== CommonConstants.DEVICE_TYPES[0] ?
           CommonConstants.BOTTOM_RECT_HEIGHT : 0 })

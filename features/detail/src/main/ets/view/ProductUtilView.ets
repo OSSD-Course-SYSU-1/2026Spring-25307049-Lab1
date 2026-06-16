@@ -28,6 +28,7 @@ export struct ProductUtilView {
   @Link isMoreDetail: boolean;
   @Link isShoppingBag: boolean;
   @Link isCustomerService: boolean;
+  @Link isShareSheetVisible: boolean;
   @State isDialogOpen: boolean = false;
   @State detailType: string = CommonConstants.BIND_SHEET_PAGE_TYPES[3];
   @Consume('pageInfos') pageInfos: NavPathStack;
@@ -94,6 +95,12 @@ export struct ProductUtilView {
                 this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[1],
                   new NavParams(DetailConstants.PARAM_STRING_LIST[0]));
               }
+            })
+          // Share entry (隔空投送) in bottom action bar
+          UtilIcon({ isMoreDetail: $isMoreDetail, iconImg: $r('app.media.icon_share') })
+            .displayPriority(3)
+            .onClick(() => {
+              this.isShareSheetVisible = true;
             })
           Blank()
             .displayPriority(1)

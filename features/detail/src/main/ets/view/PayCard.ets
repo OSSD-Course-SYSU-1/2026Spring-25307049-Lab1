@@ -14,7 +14,7 @@
  */
 
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { DetailConstants } from '../constants/DetailConstants';
 import { PayCardViewModel, SelectProjectItem, SelectItem } from '../viewmodel/PayCardViewModel';
 
@@ -24,6 +24,7 @@ export struct PayCard {
   @Prop currentBreakpoint: string = BreakpointConstants.BREAKPOINT_LG;
   @Link isOpen: boolean;
   @Link detailType: string;
+  @State walletChecked: boolean = false;
   private context: Context = this.getUIContext().getHostContext()!
   private payCardSelectList: SelectProjectItem[] = new PayCardViewModel(this.context).getPayCardSelectList();
 
@@ -146,6 +147,9 @@ export struct PayCard {
                       right: $r('app.float.pay_config_margin'),
                       bottom: $r('app.float.pay_config_margin')
                     })
+                    .onClick(() => {
+                      ToastUtil.show('已选择：' + selectItem.getName());
+                    })
                   }, (selectItem: SelectItem, selectIndex: number) => JSON.stringify(selectItem) + selectIndex)
                 }
                 .width(CommonConstants.FULL_PERCENT)
@@ -173,9 +177,16 @@ export struct PayCard {
               .fontWeight(CommonConstants.FONT_WEIGHT_500)
             Blank()
             Checkbox()
+              .select(this.walletChecked)
               .selectedColor($r('app.color.util_button_2'))
               .shape(CheckBoxShape.CIRCLE)
               .width($r('app.float.checkbox_width'))
+              .onChange((value: boolean) => {
+                this.walletChecked = value;
+                if (value) {
+                  ToastUtil.show('已选择使用钱包余额');
+                }
+              })
           }
           .padding({
             top: $r('app.float.wallet_row_padding_1'),
@@ -203,6 +214,9 @@ export struct PayCard {
           top: $r('app.float.pay_button_margin_top'),
           bottom: deviceInfo.deviceType === CommonConstants.DEVICE_TYPES[0] ? $r('app.float.pay_button_margin_bottom') :
             CommonConstants.BOTTOM_RECT_HEIGHT
+        })
+        .onClick(() => {
+          ToastUtil.show('订单已提交，感谢购买！');
         })
     }
     .width(CommonConstants.FULL_PERCENT)

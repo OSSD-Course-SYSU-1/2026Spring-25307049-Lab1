@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, BreakpointType, CommonConstants, Logger, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, CURRENT_PRODUCT_ID_KEY, Logger, resolveProductId, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { SectionProduct, SectionProductsViewModel } from '../viewmodel/SectionProductsViewModel';
 import { HomeButton, ProductFeature, ProductInfo, ProductPrice, ProductTitle, TitleView } from './CommonView';
@@ -43,7 +43,7 @@ export struct FlashSale {
           y: $r('app.float.flash_grid_gutter_y')
         }
       }) {
-        ForEach(this.getCurrentSectionProducts(), (item: SectionProduct) => {
+        ForEach(this.getCurrentSectionProducts(), (item: SectionProduct, index: number) => {
           GridCol({
             span: {
               sm: BreakpointConstants.GRID_COLUMN_SPANS[2],
@@ -63,7 +63,9 @@ export struct FlashSale {
                 Blank()
                 ProductPrice(item.getPrice(), item.getOriginalPrice())
                 Row(){
-                  HomeButton(HomeConstants.BUTTON_TEXTS(this.context)[1])
+                  HomeButton(HomeConstants.BUTTON_TEXTS(this.context)[1], () => {
+                    ToastUtil.showProductAction('已加入抢购队列');
+                  })
                 }
                 .margin({
                   top: $r('app.float.flash_button_top'),
@@ -81,6 +83,8 @@ export struct FlashSale {
             .width(CommonConstants.FULL_PERCENT)
             .height(CommonConstants.FULL_PERCENT)
             .onClick(() => {
+              let productName = item.getTitle().length > 0 ? item.getTitle()[0] : '';
+              AppStorage.setOrCreate(CURRENT_PRODUCT_ID_KEY, resolveProductId(productName, index));
               this.pageInfos.pushPathByName(ClassifyConstants.PAGE_INFO_LIST[2], undefined);
             })
           }

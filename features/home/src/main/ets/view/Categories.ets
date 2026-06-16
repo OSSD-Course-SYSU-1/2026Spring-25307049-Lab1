@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, BreakpointType, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { HomeConstants } from '../constants/HomeConstants';
 import { IconInfo, IconInfoViewModel } from '../viewmodel/IconInfoViewModel';
 
@@ -45,6 +45,9 @@ export struct Categories {
             .height(CommonConstants.FULL_PERCENT)
             .justifyContent(this.currentBreakpoint === BreakpointConstants.BREAKPOINT_SM ? FlexAlign.Center :
               FlexAlign.Start)
+            .onClick(() => {
+              ToastUtil.showNavigateCategory(item.getInfo());
+            })
           }
           .width(new BreakpointType(HomeConstants.CATEGORY_LIST_ITEM_WIDTHS[0],
             HomeConstants.CATEGORY_LIST_ITEM_WIDTHS[1], HomeConstants.CATEGORY_LIST_ITEM_WIDTHS[2]).

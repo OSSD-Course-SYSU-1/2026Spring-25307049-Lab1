@@ -14,6 +14,9 @@ export class MockDeviceEntry {
 }
 
 export class ShareConstants {
+  /** Application bundle name for distributed service registration */
+  static readonly BUNDLE_NAME: string = 'com.huawei.multishoppingpricecomparison';
+
   /** KV store name for distributed data transfer */
   static readonly KV_STORE_ID: string = 'airdrop_share_store';
 
@@ -38,4 +41,10 @@ export class ShareConstants {
 
   /** AppStorage key for received share data notification */
   static readonly RECEIVED_SHARE_KEY: string = 'received_share_data';
+
+  /** Duration in ms to show the receive notification before auto-dismiss */
+  static readonly RECEIVE_NOTIFICATION_DURATION: number = 5000;
+
+  /** AppStorage key for triggering receive notification visibility */
+  static readonly RECEIVE_NOTIFICATION_KEY: string = 'show_receive_notification';
 }

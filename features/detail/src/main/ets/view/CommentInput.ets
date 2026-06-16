@@ -14,12 +14,13 @@
  */
 
 import { deviceInfo } from '@kit.BasicServicesKit';
-import { BreakpointConstants, CommonConstants, ResourceUtil } from '@ohos/commons';
+import { BreakpointConstants, CommonConstants, ResourceUtil, ToastUtil } from '@ohos/commons';
 import { LiveConstants } from '../constants/LiveConstants';
 
 @Component
 export struct CommentInput {
   @Link currentBreakpoint: string;
+  @State isLiked: boolean = false;
 
   @Builder
   shopCarBuilder() {
@@ -47,6 +48,9 @@ export struct CommentInput {
           right: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ?
             $r('app.float.comment_icon_margin_right_lg') : $r('app.float.comment_icon_margin_right_sm_md')
         })
+        .onClick(() => {
+          ToastUtil.show('分享直播间');
+        })
 
       Image($r('app.media.icon_like'))
         .width(ResourceUtil.getCommonImgSize()[0])
@@ -54,6 +58,12 @@ export struct CommentInput {
         .margin({
           right: this.currentBreakpoint === BreakpointConstants.BREAKPOINT_LG ?
             $r('app.float.comment_icon_margin_right_lg') : $r('app.float.comment_icon_margin_right_sm_md')
+        })
+        .onClick(() => {
+          this.isLiked = !this.isLiked;
+          if (this.isLiked) {
+            ToastUtil.show('已点赞');
+          }
         })
 
       this.shopCarButton()
