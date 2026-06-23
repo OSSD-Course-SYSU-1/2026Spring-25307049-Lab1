@@ -112,5 +112,7 @@ export struct Home {
       })
       .scrollable(false)
     }
+    .backgroundImage($r('app.media.background_photo'))
+    .backgroundImageSize(ImageSize.Cover)
   }
 }

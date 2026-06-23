@@ -166,6 +166,8 @@ struct Index {
       paddingEnd: LengthMetrics.vp(PADDING_16VP)
     })
     .backgroundColor($r('sys.color.background_secondary'))
+    .backgroundImage($r('app.media.background_photo'))
+    .backgroundImageSize(ImageSize.Cover)
     .mode(this.breakpointModel.currentNavigationMode)
     .navBarWidth(SIZE_PERCENT_40)
   }
